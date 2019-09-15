@@ -1,0 +1,24 @@
+
+======================================================
+======================================================
+= SCRIPT TO ANALYZE FILES IN A HARDDRIVE             =
+======================================================
+======================================================
+Starting time : dimanche 15 septembre 2019, 08:39:31 (UTC+0200)
+Version : 0.0.1
+
+TARGET_DIR=../
+LOG_PATH=../log/scan_files.Mr-Hyde.20190915.083931.log
+REPORT_PATH=../report/scan_files.Mr-Hyde.20190915.083931.csv
+TMP_PATH=../tmp/scan_files.14974.tmp
+TMP2_PATH=../tmp/2.14974.tmp
+------------------------------------------------------
+[i] Analyze of the files
+------------------------------------------------------
+[i] Sort of the information
+------------------------------------------------------
+[i] Removing the temporary file ../tmp/scan_files.14974.tmp
+[i] Removing the temporary file ../tmp/2.14974.tmp
+------------------------------------------------------
+Exit code = 0
+------------------------------------------------------
