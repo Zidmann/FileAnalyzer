@@ -66,12 +66,12 @@ LOG_PATH=${3:-"${LOG_DIR}/$PREFIX_NAME.$(hostname).$TODAYDATE.$TODAYTIME.log"}
 mkdir -p "$(dirname "$LOG_PATH")"
 
 # Temporaryfile path
-TMP_PATH="$TMP_DIR/$PREFIX_NAME.$$.tmp"
-TMP2_PATH="$TMP_DIR/$(PREFIX_NAME)2.$$.tmp"
+TMP_PATH="$TMP_DIR/$PREFIX_NAME.1.$$.tmp"
+TMP2_PATH="$TMP_DIR/$PREFIX_NAME.2.$$.tmp"
 mkdir -p "$(dirname "$TMP_PATH")"
 mkdir -p "$(dirname "$TMP2_PATH")"
 
-HEADER="FILEPATH;ERRCODE;INODE;TYPE;PERM;OWNER;GROUP;DAY;TIME;DEPTH;SIZE;NBLINES;MD5SUM;"
+HEADER="FILEPATH;ERRCODE;INODE;TYPE;PERM;OWNER;OWNERID;GROUP;GROUPID;DAY;TIME;DEPTH;SIZE;NBLINES;MD5SUM;"
 
 ##################################################################################
 # First console actions - Printing the header and the variables
