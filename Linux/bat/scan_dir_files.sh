@@ -34,9 +34,9 @@ fi
 if [ -f "$CONF_DIR/$PREFIX_NAME.env" ]
 then
 	CONF_PATH="$CONF_DIR/$PREFIX_NAME.env"	
-elif [ -f "$CONF_DIR/scan_files.env" ]
+elif [ -f "$CONF_DIR/scan_dir_files.env" ]
 then
-	PREFIX_NAME="scan_files"
+	PREFIX_NAME="scan_dir_files"
 	CONF_PATH="$CONF_DIR/$PREFIX_NAME.env"
 else
 	echo "[-] Impossible to find a valid configuration file"

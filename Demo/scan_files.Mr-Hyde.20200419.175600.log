@@ -4,21 +4,21 @@
 = SCRIPT TO ANALYZE FILES IN A DIRECTORY             =
 ======================================================
 ======================================================
-Starting time : dimanche 19 avril 2020, 17:56:00 (UTC+0200)
+Starting time : dimanche 19 avril 2020, 18:15:47 (UTC+0200)
 Version : 0.0.2
 
 TARGET_DIR=.
-LOG_PATH=./log/scan_files.Mr-Hyde.20200419.175600.log
-REPORT_PATH=./report/scan_files.Mr-Hyde.20200419.175600.csv
-TMP_PATH=./tmp/scan_files.1.12555.tmp
-TMP2_PATH=./tmp/scan_files.2.12555.tmp
+LOG_PATH=./log/scan_dir_files.Mr-Hyde.20200419.181547.log
+REPORT_PATH=./report/scan_dir_files.Mr-Hyde.20200419.181547.csv
+TMP_PATH=./tmp/scan_dir_files.1.14034.tmp
+TMP2_PATH=./tmp/scan_dir_files.2.14034.tmp
 ------------------------------------------------------
 [i] Analyze of the files
 ------------------------------------------------------
 [i] Sort of the information
 ------------------------------------------------------
-[i] Removing the temporary file ./tmp/scan_files.1.12555.tmp
-[i] Removing the temporary file ./tmp/scan_files.2.12555.tmp
+[i] Removing the temporary file ./tmp/scan_dir_files.1.14034.tmp
+[i] Removing the temporary file ./tmp/scan_dir_files.2.14034.tmp
 ------------------------------------------------------
 Exit code = 0
 ------------------------------------------------------
