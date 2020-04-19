@@ -10,7 +10,7 @@
 ##################################################################################
 # Beginning of the script - definition of the variables
 ##################################################################################
-SCRIPT_VERSION="0.0.1"
+SCRIPT_VERSION="0.0.2"
 
 # Return code
 RETURN_CODE=0
@@ -79,7 +79,7 @@ HEADER="FILEPATH;ERRCODE;INODE;TYPE;PERM;OWNER;OWNERID;GROUP;GROUPID;DAY;TIME;DE
 echo "" | tee -a "$LOG_PATH"
 echo "======================================================" | tee -a "$LOG_PATH"
 echo "======================================================" | tee -a "$LOG_PATH"
-echo "= SCRIPT TO ANALYZE FILES IN A HARDDRIVE             =" | tee -a "$LOG_PATH"
+echo "= SCRIPT TO ANALYZE FILES IN A DIRECTORY             =" | tee -a "$LOG_PATH"
 echo "======================================================" | tee -a "$LOG_PATH"
 echo "======================================================" | tee -a "$LOG_PATH"
 
