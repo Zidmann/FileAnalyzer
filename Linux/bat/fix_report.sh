@@ -3,17 +3,14 @@
 ##################################################################################
 ## AUTHOR : Emmanuel ZIDEL-CAUFFET - Zidmann (emmanuel.zidel@gmail.com)
 ##################################################################################
-## 2019/08/12 - First release of the script
-##################################################################################
-## 2020/05/08 - Removing useless ';' at the end of each line
-##            - Adding the elapse time printing
+## 2020/05/09 - First release of the script
 ##################################################################################
 
 
 ##################################################################################
 # Beginning of the script - definition of the variables
 ##################################################################################
-SCRIPT_VERSION="0.0.3"
+SCRIPT_VERSION="0.0.1"
 
 # Return code
 RETURN_CODE=0
@@ -37,44 +34,46 @@ fi
 if [ -f "$CONF_DIR/$PREFIX_NAME.env" ]
 then
 	CONF_PATH="$CONF_DIR/$PREFIX_NAME.env"	
-elif [ -f "$CONF_DIR/scan_dir_files.env" ]
+elif [ -f "$CONF_DIR/fix_report.env" ]
 then
-	PREFIX_NAME="scan_dir_files"
+	PREFIX_NAME="fix_report"
 	CONF_PATH="$CONF_DIR/$PREFIX_NAME.env"
 else
 	echo "[-] Impossible to find a valid configuration file"
 	exit "$RETURN_CODE"
 fi
 
-TARGET_DIR="$1"
-if [ "$TARGET_DIR" == "" ]
+TARGET_REPORT="$1"
+if [ "$TARGET_REPORT" == "" ]
 then
-	echo "Usage : $0 <DIRECTORY> [REPORT] [LOGFILE]"
+	echo "Usage : $0 <REPORT> [LOGFILE]"
 	exit "$RETURN_CODE"
 fi
 
+# Bad line file
+TARGET_REPORT_DIR="$(dirname "$TARGET_REPORT")"
+TARGET_REPORT_BASENAME="$(basename "$TARGET_REPORT")"
+HAS_EXTENSION=$(echo "$TARGET_REPORT_BASENAME" | awk 'BEGIN{FS="."}{if(NF-1==0){EXTENSION=0}else{EXTENSION=1} print EXTENSION}')
+if [ "$HAS_EXTENSION" == "1" ]
+then
+	BADLINE_BASENAME=$(echo "$TARGET_REPORT_BASENAME" | awk 'BEGIN{FS=OFS="."}{$NF="bad."$NF; print $0}')
+else
+	BADLINE_BASENAME="$TARGET_REPORT_BASENAME.bad"
+fi
+BADLINE_REPORT="$TARGET_REPORT_DIR"/"$BADLINE_BASENAME"
+
 # Loading configuration file
 source "$CONF_PATH"
-REPORT_DIR="$DIRNAME/report"
 LOG_DIR="$DIRNAME/log"
 TMP_DIR="$DIRNAME/tmp"
-UTIL_DIR="$DIRNAME/util"
-
-# Report file path
-REPORT_PATH=${2:-"${REPORT_DIR}/$PREFIX_NAME.$(hostname).$TODAYDATE.$TODAYTIME.csv"}
-mkdir -p "$(dirname "$REPORT_PATH")"
 
 # Log file path
-LOG_PATH=${3:-"${LOG_DIR}/$PREFIX_NAME.$(hostname).$TODAYDATE.$TODAYTIME.log"}
+LOG_PATH=${2:-"${LOG_DIR}/$PREFIX_NAME.$(hostname).$TODAYDATE.$TODAYTIME.log"}
 mkdir -p "$(dirname "$LOG_PATH")"
 
 # Temporaryfile path
 TMP_PATH="$TMP_DIR/$PREFIX_NAME.1.$$.tmp"
-TMP2_PATH="$TMP_DIR/$PREFIX_NAME.2.$$.tmp"
 mkdir -p "$(dirname "$TMP_PATH")"
-mkdir -p "$(dirname "$TMP2_PATH")"
-
-HEADER="FILEPATH;ERRCODE;INODE;TYPE;PERM;OWNER;OWNERID;GROUP;GROUPID;DAY;TIME;DEPTH;SIZE;NBLINES;MD5SUM;"
 
 # Elapsed time - begin date
 BEGIN_DATE=$(date +%s)
@@ -85,38 +84,39 @@ BEGIN_DATE=$(date +%s)
 echo "" | tee -a "$LOG_PATH"
 echo "======================================================" | tee -a "$LOG_PATH"
 echo "======================================================" | tee -a "$LOG_PATH"
-echo "= SCRIPT TO ANALYZE FILES IN A DIRECTORY             =" | tee -a "$LOG_PATH"
+echo "= SCRIPT TO FIX A REPORT                             =" | tee -a "$LOG_PATH"
 echo "======================================================" | tee -a "$LOG_PATH"
 echo "======================================================" | tee -a "$LOG_PATH"
 
-echo "Starting time : $(date)"      | tee -a "$LOG_PATH"
-echo "Version : $SCRIPT_VERSION"    | tee -a "$LOG_PATH"
-echo ""                             | tee -a "$LOG_PATH"
-echo "TARGET_DIR=$TARGET_DIR"       | tee -a "$LOG_PATH"
-echo "LOG_PATH=$LOG_PATH"           | tee -a "$LOG_PATH"
-echo "REPORT_PATH=$REPORT_PATH"     | tee -a "$LOG_PATH"
-echo "TMP_PATH=$TMP_PATH"           | tee -a "$LOG_PATH"
-echo "TMP2_PATH=$TMP2_PATH"         | tee -a "$LOG_PATH"
-
-##################################################################################
-# Next console actions - Starting the analyzing
-##################################################################################
-rm -f "$REPORT_PATH" 2>/dev/null
-echo "$HEADER" > "$REPORT_PATH"
+echo "Starting time : $(date)"        | tee -a "$LOG_PATH"
+echo "Version : $SCRIPT_VERSION"      | tee -a "$LOG_PATH"
+echo ""                               | tee -a "$LOG_PATH"
+echo "TARGET_REPORT=$TARGET_REPORT"   | tee -a "$LOG_PATH"
+echo "BADLINE_REPORT=$BADLINE_REPORT" | tee -a "$LOG_PATH"
+echo "LOG_PATH=$LOG_PATH"             | tee -a "$LOG_PATH"
+echo "TMP_PATH=$TMP_PATH"             | tee -a "$LOG_PATH"
 
 ##################################################################################
 echo "------------------------------------------------------" | tee -a "$LOG_PATH"
-echo "[i] Analyze of the files" | tee -a "$LOG_PATH"
+if [ ! -f "$TARGET_REPORT" ]
+then
+	echo "[-] The target report does not exist" | tee -a "$LOG_PATH"
+else
+	echo "[i] RULE-01 - Keeping the line with 15 delimiters" | tee -a "$LOG_PATH"
+	awk -F';' 'BEGIN{FS=OFS=";"}{if(NF-1==15){VALID=1}else{VALID=0} print VALID, $0}' "$TARGET_REPORT" 1>"$TMP_PATH" 2>"$LOG_PATH"
 
-find "$TARGET_DIR" -exec "$UTIL_DIR/analyze_file.sh" {} \; 1>"$TMP_PATH" 2>"$TMP2_PATH"
-RETURN_CODE=$([ $? == 0 ] && echo "$RETURN_CODE" || echo "1")
-cat "$TMP2_PATH" | tee -a "$LOG_PATH"
+	echo "[i] Copying valid lines in original file" | tee -a "$LOG_PATH"
+	grep "^1;" "$TMP_PATH"    | cut -c3- 1>"$TARGET_REPORT"  2>"$LOG_PATH"
 
-##################################################################################
-echo "------------------------------------------------------" | tee -a "$LOG_PATH"
-echo "[i] Sort of the information" | tee -a "$LOG_PATH"
-sort "$TMP_PATH" 2>/dev/null | uniq | awk 'BEGIN {FS=";"; OFS=";"; ORS="\n"}{$1=$1;print $0}' >> "$REPORT_PATH" 
-RETURN_CODE=$([ $? == 0 ] && echo "$RETURN_CODE" || echo "1")
+	NB_LINES=$(grep -v "^1;" "$TMP_PATH" 2>/dev/null | wc -l)
+	if [ "$NB_LINES" != "0" ]
+	then
+		echo "[i] Copying bad lines in anormal file" | tee -a "$LOG_PATH"
+		grep -v "^1;" "$TMP_PATH" | cut -c3- 1>"$BADLINE_REPORT" 2>"$LOG_PATH"
+	else
+		echo "[i] No bad lines to copy in anormal file" | tee -a "$LOG_PATH"
+	fi
+fi
 
 ##################################################################################
 # Elapsed time - end date and length
@@ -129,8 +129,6 @@ ELAPSED_TIME=$(( $END_DATE - $BEGIN_DATE ))
 echo "------------------------------------------------------" | tee -a "$LOG_PATH"
 echo "[i] Removing the temporary file $TMP_PATH"              | tee -a "$LOG_PATH"
 rm "$TMP_PATH" 2>/dev/null                                    | tee -a "$LOG_PATH"
-echo "[i] Removing the temporary file $TMP2_PATH"             | tee -a "$LOG_PATH"
-rm "$TMP2_PATH" 2>/dev/null                                   | tee -a "$LOG_PATH"
 
 echo "------------------------------------------------------" | tee -a "$LOG_PATH"
 echo "Elapsed time : $ELAPSED_TIME sec"                       | tee -a "$LOG_PATH"

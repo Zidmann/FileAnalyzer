@@ -2,11 +2,13 @@
 By [Zidmann](mailto:emmanuel.zidel@gmail.com) :bow:
 
 ## Description
-Script to analyze the elements in a directory (file/directory/link/...) to, in a second step, index them and compare them
+Script to analyze the elements in a directory (file/directory/link/...) to, in a second step, index them and compare them.
+The project includes a second script to validate the report output.
 
 ## Demo
 The demo was made on my personal computer by analyzing the files of the project itself.
 Then the command below was simply launched in the Linux/ directory of the project :
 ```bash
 ./bat/scan_dir_files.sh .
+./bat/fix_report.sh report/<PREVIOUS_REPORT_FILE>
 ```
