@@ -10,7 +10,7 @@
 ##################################################################################
 # Beginning of the script - definition of the variables
 ##################################################################################
-SCRIPT_VERSION="0.0.1"
+SCRIPT_VERSION="0.0.2"
 
 # Return code
 RETURN_CODE=0
@@ -103,16 +103,16 @@ then
 	echo "[-] The target report does not exist" | tee -a "$LOG_PATH"
 else
 	echo "[i] RULE-01 - Keeping the line with 15 delimiters" | tee -a "$LOG_PATH"
-	awk -F';' 'BEGIN{FS=OFS=";"}{if(NF-1==15){VALID=1}else{VALID=0} print VALID, $0}' "$TARGET_REPORT" 1>"$TMP_PATH" 2>"$LOG_PATH"
+	awk -F';' 'BEGIN{FS=OFS=";"}{if(NF-1==15){VALID=1}else{VALID=0} print VALID, $0}' "$TARGET_REPORT" 1>"$TMP_PATH" 2>>"$LOG_PATH"
 
 	echo "[i] Copying valid lines in original file" | tee -a "$LOG_PATH"
-	grep "^1;" "$TMP_PATH"    | cut -c3- 1>"$TARGET_REPORT"  2>"$LOG_PATH"
+	grep "^1;" "$TMP_PATH" | cut -c3- 1>"$TARGET_REPORT"  2>>"$LOG_PATH"
 
 	NB_LINES=$(grep -v "^1;" "$TMP_PATH" 2>/dev/null | wc -l)
 	if [ "$NB_LINES" != "0" ]
 	then
 		echo "[i] Copying bad lines in anormal file" | tee -a "$LOG_PATH"
-		grep -v "^1;" "$TMP_PATH" | cut -c3- 1>"$BADLINE_REPORT" 2>"$LOG_PATH"
+		grep -v "^1;" "$TMP_PATH" | cut -c3- 1>"$BADLINE_REPORT" 2>>"$LOG_PATH"
 	else
 		echo "[i] No bad lines to copy in anormal file" | tee -a "$LOG_PATH"
 	fi

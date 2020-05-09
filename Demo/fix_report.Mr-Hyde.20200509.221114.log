@@ -1,0 +1,25 @@
+
+======================================================
+======================================================
+= SCRIPT TO FIX A REPORT                             =
+======================================================
+======================================================
+Starting time : samedi 9 mai 2020, 22:11:14 (UTC+0200)
+Version : 0.0.2
+
+TARGET_REPORT=report/scan_dir_files.Mr-Hyde.20200509.193014.csv
+BADLINE_REPORT=report/scan_dir_files.Mr-Hyde.20200509.193014.bad.csv
+LOG_PATH=./log/fix_report.Mr-Hyde.20200509.221114.log
+TMP_PATH=./tmp/fix_report.1.15412.tmp
+------------------------------------------------------
+[i] RULE-01 - Keeping the line with 15 delimiters
+[i] Copying valid lines in original file
+[i] No bad lines to copy in anormal file
+------------------------------------------------------
+[i] Removing the temporary file ./tmp/fix_report.1.15412.tmp
+------------------------------------------------------
+Elapsed time : 0 sec
+Ending time  : samedi 9 mai 2020, 22:11:14 (UTC+0200)
+------------------------------------------------------
+Exit code = 0
+------------------------------------------------------
