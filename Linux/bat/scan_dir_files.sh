@@ -121,7 +121,7 @@ RETURN_CODE=$([ $? == 0 ] && echo "$RETURN_CODE" || echo "1")
 ##################################################################################
 # Elapsed time - end date and length
 END_DATE=$(date +%s)
-ELAPSED_TIME=$(( $END_DATE - $BEGIN_DATE ))
+ELAPSED_TIME=$((END_DATE - BEGIN_DATE))
 
 ##################################################################################
 # End of the script
