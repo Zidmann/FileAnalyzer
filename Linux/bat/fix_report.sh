@@ -111,12 +111,12 @@ else
 
 	# RULES-02 is here to avoid any odd letters (like  or ┼)
 	# Most of the time they come from some data corruption and could jam the Qlik script during the file loading
-	VALID_LETTERS=$(cat "$CONF_DIR/letters_valid.conf");
+	VALID_LETTERS=$(cat "$CONF_DIR/letters_valid.conf"|tr -d '\n');
 	echo "[i] RULE-02 - Keeping line with valid letters" | tee -a "$LOG_PATH"
 
 	grep -v "^0;" "$TMP_PATH" 1>"$TMP2_PATH" 2>>"$LOG_PATH"
 	RETURN_CODE=$([ $? == 0 ] && echo "$RETURN_CODE" || echo "1")
-	grep    "^0;" "$TMP_PATH" 2>>"$LOG_PATH" | cut -c3- | awk -v VALID_LETTERS="$VALID_LETTERS" 'BEGIN{OFS=";"}{STATUS=0;for(i=1;i<=length($1);i++){STATUS=2;for(j=1;j<=length(VALID_LETTERS);j++){if(substr($1,i,1)==substr(VALID_LETTERS,j,1)){STATUS=0;break;}}if(STATUS==2){break;}} print STATUS, $0;}' 1>>"$TMP2_PATH" 2>>"$LOG_PATH"
+	grep    "^0;" "$TMP_PATH" 2>>"$LOG_PATH" | cut -c3- | awk -v VALID_LETTERS="$VALID_LETTERS" 'BEGIN{FS=OFS=";"}{STATUS=0;for(i=1;i<=length($1);i++){STATUS=2;for(j=1;j<=length(VALID_LETTERS);j++){if(substr($1,i,1)==substr(VALID_LETTERS,j,1)){STATUS=0;break;}}if(STATUS==2){break;}} print STATUS, $0;}' 1>>"$TMP2_PATH" 2>>"$LOG_PATH"
 	RETURN_CODE=$([ $? == 0 ] && echo "$RETURN_CODE" || echo "1")
 
 	echo "[i] Copying valid lines in original file" | tee -a "$LOG_PATH"
