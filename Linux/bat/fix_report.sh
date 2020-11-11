@@ -9,16 +9,78 @@
 ##              Refactoring of the analysis
 ##              Correcting the glitch with grep when no result is found
 ##################################################################################
+## 2020/11/11 - Including the signal trap management
+##################################################################################
 
 
 ##################################################################################
 # Beginning of the script - definition of the variables
 ##################################################################################
-SCRIPT_VERSION="0.0.3"
+SCRIPT_VERSION="0.0.4"
 
 # Return code
 RETURN_CODE=0
 
+# Trap management
+function exit_function_auxi(){
+	echo "------------------------------------------------------"
+	if [ -f "$TMP_PATH" ]
+	then
+		echo "[i] Removing the temporary file $TMP_PATH"
+		rm "$TMP_PATH" 2>/dev/null
+	fi
+	if [ -f "$TMP2_PATH" ]
+	then
+		echo "[i] Removing the temporary file $TMP2_PATH"
+		rm "$TMP2_PATH" 2>/dev/null
+	fi
+	if [ -f "$TMP3_PATH" ]
+	then
+		echo "[i] Removing the temporary file $TMP3_PATH"
+		rm "$TMP3_PATH" 2>/dev/null
+	fi
+
+	# Elapsed time - end date and length
+	if [ "$BEGIN_DATE" == "" ]
+	then 
+		END_DATE=$(date +%s)
+		ELAPSED_TIME=$((END_DATE - BEGIN_DATE))
+
+		echo "------------------------------------------------------"
+		echo "Elapsed time : $ELAPSED_TIME sec"
+		echo "Ending time  : $(date)"
+	fi
+	echo "------------------------------------------------------"
+	echo "Exit code = $RETURN_CODE"
+	echo "------------------------------------------------------"
+}
+function exit_function(){
+	if [ -f "$LOG_PATH" ]
+	then
+		exit_function_auxi | tee -a "$LOG_PATH"
+	else
+		exit_function_auxi
+	fi
+}
+function interrupt_script_auxi(){
+	echo "------------------------------------------------------"
+	echo "[-] A signal $1 was trapped"
+}
+function interrupt_script(){
+	if [ -f "$LOG_PATH" ]
+	then
+		interrupt_script_auxi "$1" | tee -a "$LOG_PATH"
+	else
+		interrupt_script_auxi "$1"
+	fi
+}
+
+trap exit_function              EXIT
+trap "interrupt_script SIGINT"  SIGINT
+trap "interrupt_script SIGQUIT" SIGQUIT
+trap "interrupt_script SIGTERM" SIGTERM
+
+# Analysis of the path and the names
 if [ "$(dirname "$0")" == "." ]
 then
 	DIRNAME=".."
@@ -153,28 +215,5 @@ else
 fi
 
 ##################################################################################
-# Elapsed time - end date and length
-END_DATE=$(date +%s)
-ELAPSED_TIME=$((END_DATE - BEGIN_DATE))
-
-##################################################################################
-# End of the script
-##################################################################################
-echo "------------------------------------------------------" | tee -a "$LOG_PATH"
-echo "[i] Removing the temporary file $TMP_PATH"              | tee -a "$LOG_PATH"
-rm "$TMP_PATH" 2>/dev/null                                    | tee -a "$LOG_PATH"
-echo "[i] Removing the temporary file $TMP2_PATH"             | tee -a "$LOG_PATH"
-rm "$TMP2_PATH" 2>/dev/null                                   | tee -a "$LOG_PATH"
-echo "[i] Removing the temporary file $TMP3_PATH"             | tee -a "$LOG_PATH"
-rm "$TMP3_PATH" 2>/dev/null                                   | tee -a "$LOG_PATH"
-
-echo "------------------------------------------------------" | tee -a "$LOG_PATH"
-echo "Elapsed time : $ELAPSED_TIME sec"                       | tee -a "$LOG_PATH"
-echo "Ending time  : $(date)"                                 | tee -a "$LOG_PATH"
-echo "------------------------------------------------------" | tee -a "$LOG_PATH"
-echo "Exit code = $RETURN_CODE"                               | tee -a "$LOG_PATH"
-
-echo "------------------------------------------------------" | tee -a "$LOG_PATH"
 exit "$RETURN_CODE"
-##################################################################################
 
