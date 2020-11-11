@@ -8,12 +8,16 @@
 ## 2020/05/08 - Removing useless ';' at the end of each line
 ##            - Adding the elapse time printing
 ##################################################################################
+## 2020/11/11 - Changes applied in the columns and delimiter,
+##               using 'stat' results instead of 'ls' program
+##               and splitting the sort step in several command to check errors
+##################################################################################
 
 
 ##################################################################################
 # Beginning of the script - definition of the variables
 ##################################################################################
-SCRIPT_VERSION="0.0.3"
+SCRIPT_VERSION="0.0.4"
 
 # Return code
 RETURN_CODE=0
@@ -74,8 +78,7 @@ TMP2_PATH="$TMP_DIR/$PREFIX_NAME.2.$$.tmp"
 mkdir -p "$(dirname "$TMP_PATH")"
 mkdir -p "$(dirname "$TMP2_PATH")"
 
-HEADER="FILEPATH;ERRCODE;INODE;TYPE;PERM;OWNER;OWNERID;GROUP;GROUPID;DAY;TIME;DEPTH;SIZE;NBLINES;MD5SUM;"
-
+HEADER="ERRCODE\tMD5SUM\tNBLINES\tINODE\tNBBLOCKS\tSIZE\tPERMISSION\tOWNER\tOWNERID\tGROUP\tGROUPID\tLASTACCESS\tLASTMODIFICATION\tLASTSTATUSCHANGE\tFILEPATH"
 # Elapsed time - begin date
 BEGIN_DATE=$(date +%s)
 
@@ -102,7 +105,7 @@ echo "TMP2_PATH=$TMP2_PATH"         | tee -a "$LOG_PATH"
 # Next console actions - Starting the analyzing
 ##################################################################################
 rm -f "$REPORT_PATH" 2>/dev/null
-echo "$HEADER" > "$REPORT_PATH"
+echo -e "$HEADER" > "$REPORT_PATH"
 
 ##################################################################################
 echo "------------------------------------------------------" | tee -a "$LOG_PATH"
@@ -115,7 +118,13 @@ cat "$TMP2_PATH" | tee -a "$LOG_PATH"
 ##################################################################################
 echo "------------------------------------------------------" | tee -a "$LOG_PATH"
 echo "[i] Sort of the information" | tee -a "$LOG_PATH"
-sort "$TMP_PATH" 2>/dev/null | uniq | awk 'BEGIN {FS=";"; OFS=";"; ORS="\n"}{$1=$1;print $0}' >> "$REPORT_PATH" 
+sort "$TMP_PATH"  1>"$TMP2_PATH"
+RETURN_CODE=$([ $? == 0 ] && echo "$RETURN_CODE" || echo "1")
+
+uniq "$TMP2_PATH" 1>"$TMP_PATH"
+RETURN_CODE=$([ $? == 0 ] && echo "$RETURN_CODE" || echo "1")
+
+awk 'BEGIN {FS=OFS="\t"; ORS="\n"}{print $0}' "$TMP_PATH" 1>>"$REPORT_PATH" 
 RETURN_CODE=$([ $? == 0 ] && echo "$RETURN_CODE" || echo "1")
 
 ##################################################################################
