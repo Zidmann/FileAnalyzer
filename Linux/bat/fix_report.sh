@@ -41,7 +41,7 @@ function exit_function_auxi(){
 	fi
 
 	# Elapsed time - end date and length
-	if [ "$BEGIN_DATE" == "" ]
+	if [ "$BEGIN_DATE" != "" ]
 	then 
 		END_DATE=$(date +%s)
 		ELAPSED_TIME=$((END_DATE - BEGIN_DATE))
