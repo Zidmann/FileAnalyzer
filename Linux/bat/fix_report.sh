@@ -21,6 +21,9 @@ SCRIPT_VERSION="0.0.4"
 # Return code
 RETURN_CODE=0
 
+# Flag to execute the exit function
+EXECUTE_EXIT_FUNCTION=0
+
 # Trap management
 function exit_function_auxi(){
 	echo "------------------------------------------------------"
@@ -55,11 +58,14 @@ function exit_function_auxi(){
 	echo "------------------------------------------------------"
 }
 function exit_function(){
-	if [ -f "$LOG_PATH" ]
+	if [ "$EXECUTE_EXIT_FUNCTION" != "0" ]
 	then
-		exit_function_auxi | tee -a "$LOG_PATH"
-	else
-		exit_function_auxi
+		if [ -f "$LOG_PATH" ]
+		then
+			exit_function_auxi | tee -a "$LOG_PATH"
+		else
+			exit_function_auxi
+		fi
 	fi
 }
 function interrupt_script_auxi(){
@@ -150,6 +156,7 @@ BEGIN_DATE=$(date +%s)
 ##################################################################################
 # First console actions - Printing the header and the variables
 ##################################################################################
+EXECUTE_EXIT_FUNCTION=1
 echo "" | tee -a "$LOG_PATH"
 echo "======================================================" | tee -a "$LOG_PATH"
 echo "======================================================" | tee -a "$LOG_PATH"
