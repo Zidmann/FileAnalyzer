@@ -4,24 +4,24 @@
 = SCRIPT TO ANALYZE FILES IN A DIRECTORY             =
 ======================================================
 ======================================================
-Starting time : dimanche 22 novembre 2020, 19:29:34 (UTC+0100)
+Starting time : dimanche 22 novembre 2020, 21:09:46 (UTC+0100)
 Version : 0.0.6
 
 TARGET_DIR=.
-LOG_PATH=./log/scan_dir_files.Mr-Hyde.20201122.192934.log
-REPORT_PATH=./report/scan_dir_files.Mr-Hyde.20201122.192934.csv
-TMP_PATH=./tmp/scan_dir_files.1.9171.tmp
-TMP2_PATH=./tmp/scan_dir_files.2.9171.tmp
+LOG_PATH=./log/scan_dir_files.Mr-Hyde.20201122.210946.log
+REPORT_PATH=./report/scan_dir_files.Mr-Hyde.20201122.210946.csv
+TMP_PATH=./tmp/scan_dir_files.1.10720.tmp
+TMP2_PATH=./tmp/scan_dir_files.2.10720.tmp
 ------------------------------------------------------
 [i] Analyze of the files
 ------------------------------------------------------
 [i] Sort of the information
 ------------------------------------------------------
-[i] Removing the temporary file ./tmp/scan_dir_files.1.9171.tmp
-[i] Removing the temporary file ./tmp/scan_dir_files.2.9171.tmp
+[i] Removing the temporary file ./tmp/scan_dir_files.1.10720.tmp
+[i] Removing the temporary file ./tmp/scan_dir_files.2.10720.tmp
 ------------------------------------------------------
 Elapsed time : 0 sec
-Ending time  : dimanche 22 novembre 2020, 19:29:34 (UTC+0100)
+Ending time  : dimanche 22 novembre 2020, 21:09:46 (UTC+0100)
 ------------------------------------------------------
 Exit code = 0
 ------------------------------------------------------

@@ -4,16 +4,16 @@
 = SCRIPT TO FIX A REPORT                             =
 ======================================================
 ======================================================
-Starting time : dimanche 22 novembre 2020, 19:30:55 (UTC+0100)
+Starting time : dimanche 22 novembre 2020, 21:09:57 (UTC+0100)
 Version : 0.0.5
 
-TARGET_REPORT=report/scan_dir_files.Mr-Hyde.20201122.192934.csv
-BADLINE_REPORT=report/scan_dir_files.Mr-Hyde.20201122.192934.bad.csv
-LOG_PATH=./log/fix_report.Mr-Hyde.20201122.193055.log
-TMP_PATH=./tmp/fix_report.1.9813.tmp
-TMP2_PATH=./tmp/fix_report.2.9813.tmp
-TMP3_PATH=./tmp/fix_report.3.9813.tmp
-TMP4_PATH=./tmp/fix_report.4.9813.tmp
+TARGET_REPORT=report/scan_dir_files.Mr-Hyde.20201122.210946.csv
+BADLINE_REPORT=report/scan_dir_files.Mr-Hyde.20201122.210946.bad.csv
+LOG_PATH=./log/fix_report.Mr-Hyde.20201122.210957.log
+TMP_PATH=./tmp/fix_report.1.11079.tmp
+TMP2_PATH=./tmp/fix_report.2.11079.tmp
+TMP3_PATH=./tmp/fix_report.3.11079.tmp
+TMP4_PATH=./tmp/fix_report.4.11079.tmp
 ------------------------------------------------------
 [i] RULE-01 - Keeping the line with 14 delimiters
 [i] RULE-02 - Removing the line with unknown status column
@@ -22,12 +22,12 @@ TMP4_PATH=./tmp/fix_report.4.9813.tmp
 [i] Copying bad lines in anormal file
  - No bad lines to copy in anormal file
 ------------------------------------------------------
-[i] Removing the temporary file ./tmp/fix_report.1.9813.tmp
-[i] Removing the temporary file ./tmp/fix_report.2.9813.tmp
-[i] Removing the temporary file ./tmp/fix_report.4.9813.tmp
+[i] Removing the temporary file ./tmp/fix_report.1.11079.tmp
+[i] Removing the temporary file ./tmp/fix_report.2.11079.tmp
+[i] Removing the temporary file ./tmp/fix_report.4.11079.tmp
 ------------------------------------------------------
 Elapsed time : 0 sec
-Ending time  : dimanche 22 novembre 2020, 19:30:55 (UTC+0100)
+Ending time  : dimanche 22 novembre 2020, 21:09:57 (UTC+0100)
 ------------------------------------------------------
 Exit code = 0
 ------------------------------------------------------
