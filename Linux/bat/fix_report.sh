@@ -16,7 +16,7 @@
 ##################################################################################
 # Beginning of the script - definition of the variables
 ##################################################################################
-SCRIPT_VERSION="0.0.4"
+SCRIPT_VERSION="0.0.5"
 
 # Return code
 RETURN_CODE=0
@@ -37,10 +37,15 @@ function exit_function_auxi(){
 		echo "[i] Removing the temporary file $TMP2_PATH"
 		rm "$TMP2_PATH" 2>/dev/null
 	fi
-	if [ -f "$TMP3_PATH" ]
+	if [ -f "$TMP4_PATH" ]
 	then
-		echo "[i] Removing the temporary file $TMP3_PATH"
-		rm "$TMP3_PATH" 2>/dev/null
+		echo "[i] Removing the temporary file $TMP4_PATH"
+		rm "$TMP4_PATH" 2>/dev/null
+	fi
+	if [ -f "$TMP4_PATH" ]
+	then
+		echo "[i] Removing the temporary file $TMP4_PATH"
+		rm "$TMP4_PATH" 2>/dev/null
 	fi
 
 	# Elapsed time - end date and length
@@ -147,8 +152,11 @@ mkdir -p "$(dirname "$LOG_PATH")"
 TMP_PATH="$TMP_DIR/$PREFIX_NAME.1.$$.tmp"
 TMP2_PATH="$TMP_DIR/$PREFIX_NAME.2.$$.tmp"
 TMP3_PATH="$TMP_DIR/$PREFIX_NAME.3.$$.tmp"
+TMP4_PATH="$TMP_DIR/$PREFIX_NAME.4.$$.tmp"
 mkdir -p "$(dirname "$TMP_PATH")"
 mkdir -p "$(dirname "$TMP2_PATH")"
+mkdir -p "$(dirname "$TMP3_PATH")"
+mkdir -p "$(dirname "$TMP4_PATH")"
 
 # Elapsed time - begin date
 BEGIN_DATE=$(date +%s)
@@ -173,6 +181,7 @@ echo "LOG_PATH=$LOG_PATH"             | tee -a "$LOG_PATH"
 echo "TMP_PATH=$TMP_PATH"             | tee -a "$LOG_PATH"
 echo "TMP2_PATH=$TMP2_PATH"           | tee -a "$LOG_PATH"
 echo "TMP3_PATH=$TMP3_PATH"           | tee -a "$LOG_PATH"
+echo "TMP4_PATH=$TMP4_PATH"           | tee -a "$LOG_PATH"
 
 ##################################################################################
 echo "------------------------------------------------------" | tee -a "$LOG_PATH"
@@ -181,40 +190,46 @@ then
 	echo "[-] The target report does not exist" | tee -a "$LOG_PATH"
 else
 	echo "[i] RULE-01 - Keeping the line with 14 delimiters" | tee -a "$LOG_PATH"
-	awk 'BEGIN{FS=OFS="\t"; ORS="\n"}{if(NF-1==14){STATUS=0}else{STATUS=1} print STATUS, $0}' "$TARGET_REPORT" 1>"$TMP_PATH" 2>>"$LOG_PATH"
+	awk 'BEGIN{FS=OFS="\t"; ORS="\n"}{if(NF==(14+1)){STATUS=0}else{STATUS=1} print STATUS, $0}' "$TARGET_REPORT" 1>"$TMP_PATH" 2>>"$LOG_PATH"
 	RETURN_CODE=$([ $? == 0 ] && echo "$RETURN_CODE" || echo "1")
 
+	echo "[i] RULE-02 - Removing the line with unknown status column" | tee -a "$LOG_PATH"
+	awk 'BEGIN{FS=OFS="\t"; ORS="\n"}{if($1==0){if($2!="OK" && $2!="ERR1" && $2!="ERR2" && $2!="ERR3"){$1=2}};print $0}' "$TMP_PATH" 1>"$TMP2_PATH" 2>>"$LOG_PATH"
+	RETURN_CODE=$([ $? == 0 ] && echo "$RETURN_CODE" || echo "1")
+ 
 	# RULES-02 is here to avoid any odd letters (like  or ┼)
 	# Most of the time they come from some data corruption and could jam the Qlik script during the file loading
-	echo "[i] RULE-02 - Keeping line with valid letters" | tee -a "$LOG_PATH"
+	echo "[i] RULE-03 - Keeping line with valid letters" | tee -a "$LOG_PATH"
 	VALID_LETTERS=$(cat "$CONF_DIR/letters_valid.conf" |tr -d '\n');
 
-	awk -v VALID_LETTERS="$VALID_LETTERS" 'BEGIN{FS=OFS="\t";ORS="\n"}{if($1==0){STATUS=0;for(i=1;i<=length($NF);i++){STATUS=2;for(j=1;j<=length(VALID_LETTERS);j++){if(substr($NF,i,1)==substr(VALID_LETTERS,j,1)){STATUS=0;break;}}if(STATUS==2){break;}} $1=STATUS;} print $0;}' "$TMP_PATH" 1>"$TMP2_PATH" 2>>"$LOG_PATH"
+	awk -v VALID_LETTERS="$VALID_LETTERS" 'BEGIN{FS=OFS="\t";ORS="\n";for(i=1;i<=length(VALID_LETTERS);i++){hashmap_validletters[substr(VALID_LETTERS,i,1)]=1}}{for(i=1;i<=length($NF);i++){if(hashmap_validletters[substr($NF,i,1)]!=1){$1=3;break;}}print $0;}' "$TMP2_PATH" 1>"$TMP3_PATH" 2>>"$LOG_PATH"
+
+
 	RETURN_CODE=$([ $? == 0 ] && echo "$RETURN_CODE" || echo "1")
 
 	echo "[i] Copying valid lines in original file" | tee -a "$LOG_PATH"
-	grep "^0" "$TMP2_PATH" 1>"$TMP3_PATH" 2>>"$LOG_PATH"
+	grep "^0" "$TMP3_PATH" 1>"$TMP4_PATH" 2>>"$LOG_PATH"
 	AUXI_CODE=$?
-	if [ -s "$TMP3_PATH" ]
+	if [ -s "$TMP4_PATH" ]
 	then
 		RETURN_CODE=$([ $AUXI_CODE == 0 ] && echo "$RETURN_CODE" || echo "1")		
 	fi
 
-	cut -c3-  "$TMP3_PATH" 1>"$TARGET_REPORT" 2>>"$LOG_PATH"
+	cut -c3-  "$TMP4_PATH" 1>"$TARGET_REPORT" 2>>"$LOG_PATH"
 	RETURN_CODE=$([ $? == 0 ] && echo "$RETURN_CODE" || echo "1")
 
 	echo "[i] Copying bad lines in anormal file" | tee -a "$LOG_PATH"
-	grep -v "^0" "$TMP2_PATH" 1>"$TMP3_PATH" 2>>"$LOG_PATH"
+	grep -v "^0" "$TMP3_PATH" 1>"$TMP4_PATH" 2>>"$LOG_PATH"
 	AUXI_CODE=$?
-	if [ -s "$TMP3_PATH" ]
+	if [ -s "$TMP4_PATH" ]
 	then
 		RETURN_CODE=$([ $AUXI_CODE == 0 ] && echo "$RETURN_CODE" || echo "1")		
 	fi
-	cut -c3-  "$TMP3_PATH" 1>"$TMP2_PATH" 2>>"$LOG_PATH"
+	cut -c3-  "$TMP4_PATH" 1>"$TMP3_PATH" 2>>"$LOG_PATH"
 	RETURN_CODE=$([ $? == 0 ] && echo "$RETURN_CODE" || echo "1")
-	if [ -s "$TMP2_PATH" ]
+	if [ -s "$TMP3_PATH" ]
 	then
-		cat "$TMP2_PATH" 1>"$BADLINE_REPORT" 2>>"$LOG_PATH"
+		cat "$TMP3_PATH" 1>"$BADLINE_REPORT" 2>>"$LOG_PATH"
 		RETURN_CODE=$([ $? == 0 ] && echo "$RETURN_CODE" || echo "1")
 	else
 		echo " - No bad lines to copy in anormal file" | tee -a "$LOG_PATH"

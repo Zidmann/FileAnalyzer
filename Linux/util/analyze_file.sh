@@ -3,12 +3,12 @@
 ## Auxiliary script to analyze a file
 
 FILEPATH="$*"
-ERRCODE=""
+STATUSCODE="OK"
 EXITCODE=0
 
 ## Definition of the exit function
 exit_line () {
-	echo -e "$ERRCODE\t$MD5SUM\t$NBLINES\t$STATRSLT"
+	echo -e "$STATUSCODE\t$MD5SUM\t$NBLINES\t$STATRSLT"
 	exit $EXITCODE
 }
 
@@ -17,7 +17,7 @@ STATRSLT=$(stat --printf "%i\t%b\t%s\t%A\t%u\t%U\t%g\t%G\t%x\t%y\t%z\t%n" "$FILE
 
 if [ "$?" != "0" ]
 then
-	ERRCODE=ERR1
+	STATUSCODE=ERR1
 	EXITCODE=1
 	exit_line
 fi
@@ -30,7 +30,7 @@ then
 	BUFFER="$(wc -l "$FILEPATH" 2>/dev/null)"
 	if [ "$?" != "0" ]
 	then
-		ERRCODE=ERR2
+		STATUSCODE=ERR2
 		EXITCODE=2
 		exit_line
 	fi
@@ -40,7 +40,7 @@ then
 	BUFFER="$(md5sum "$FILEPATH" 2>/dev/null)"
 	if [ "$?" != "0" ]
 	then
-		ERRCODE=ERR3
+		STATUSCODE=ERR3
 		EXITCODE=3
 		exit_line
 	fi
