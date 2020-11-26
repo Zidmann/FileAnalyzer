@@ -1,0 +1,27 @@
+
+======================================================
+======================================================
+= SCRIPT TO ANALYZE FILES IN A DIRECTORY             =
+======================================================
+======================================================
+Starting time : jeudi 26 novembre 2020, 21:10:34 (UTC+0100)
+Version : 0.0.6
+
+TARGET_DIR=.
+LOG_PATH=/home/zidmann/Bureau/ProjetsInformatiques/FileAnalyzer/Linux/log/scan_dir_files.Mr-Hyde.20201126.211034.log
+REPORT_PATH=/home/zidmann/Bureau/ProjetsInformatiques/FileAnalyzer/Linux/report/scan_dir_files.Mr-Hyde.20201126.211034.csv
+TMP_PATH=/home/zidmann/Bureau/ProjetsInformatiques/FileAnalyzer/Linux/tmp/scan_dir_files.1.5303.tmp
+TMP2_PATH=/home/zidmann/Bureau/ProjetsInformatiques/FileAnalyzer/Linux/tmp/scan_dir_files.2.5303.tmp
+------------------------------------------------------
+[i] Analyze of the files
+------------------------------------------------------
+[i] Sort of the information
+------------------------------------------------------
+[i] Removing the temporary file /home/zidmann/Bureau/ProjetsInformatiques/FileAnalyzer/Linux/tmp/scan_dir_files.1.5303.tmp
+[i] Removing the temporary file /home/zidmann/Bureau/ProjetsInformatiques/FileAnalyzer/Linux/tmp/scan_dir_files.2.5303.tmp
+------------------------------------------------------
+Elapsed time : 1 sec
+Ending time  : jeudi 26 novembre 2020, 21:10:35 (UTC+0100)
+------------------------------------------------------
+Exit code = 0
+------------------------------------------------------
