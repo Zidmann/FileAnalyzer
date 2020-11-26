@@ -37,10 +37,10 @@ function exit_function_auxi(){
 		echo "[i] Removing the temporary file $TMP2_PATH"
 		rm "$TMP2_PATH" 2>/dev/null
 	fi
-	if [ -f "$TMP4_PATH" ]
+	if [ -f "$TMP3_PATH" ]
 	then
-		echo "[i] Removing the temporary file $TMP4_PATH"
-		rm "$TMP4_PATH" 2>/dev/null
+		echo "[i] Removing the temporary file $TMP3_PATH"
+		rm "$TMP3_PATH" 2>/dev/null
 	fi
 	if [ -f "$TMP4_PATH" ]
 	then
