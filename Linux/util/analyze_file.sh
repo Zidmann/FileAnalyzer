@@ -8,13 +8,12 @@ EXITCODE=0
 
 ## Definition of the exit function
 exit_line () {
-	echo -e "$STATUSCODE\t$MD5SUM\t$NBLINES\t$STATRSLT"
+	echo -e "$STATUSCODE\t$MD5SUM\t$NBLINES\t$STATRSLT\t$FILEPATH"
 	exit $EXITCODE
 }
 
 ### Extraction of 'ls' command information
-STATRSLT=$(stat --printf "%i\t%b\t%s\t%A\t%u\t%U\t%g\t%G\t%x\t%y\t%z\t%n" "$FILEPATH" 2>/dev/null)
-
+STATRSLT=$(stat --printf "%i\t%b\t%s\t%A\t%u\t%U\t%g\t%G\t%x\t%y\t%z" "$FILEPATH" 2>/dev/null)
 if [ "$?" != "0" ]
 then
 	STATUSCODE=ERR1
