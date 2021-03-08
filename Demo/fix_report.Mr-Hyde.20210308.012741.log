@@ -1,0 +1,34 @@
+
+======================================================
+======================================================
+= SCRIPT TO FIX A REPORT                             =
+======================================================
+======================================================
+Starting time : lun. 08 mars 2021 01:27:41 CET
+Version : 0.0.6
+
+TARGET_REPORT=report/scan_dir_files.Mr-Hyde.20210308.012726.csv
+BADLINE_REPORT=report/scan_dir_files.Mr-Hyde.20210308.012726.bad.csv
+LOG_PATH=/home/zidmann/Bureau/GIT/FileAnalyzer/Linux/log/fix_report.Mr-Hyde.20210308.012741.log
+TMP_PATH=/home/zidmann/Bureau/GIT/FileAnalyzer/Linux/tmp/fix_report.1.9785.tmp
+TMP2_PATH=/home/zidmann/Bureau/GIT/FileAnalyzer/Linux/tmp/fix_report.2.9785.tmp
+TMP3_PATH=/home/zidmann/Bureau/GIT/FileAnalyzer/Linux/tmp/fix_report.3.9785.tmp
+TMP4_PATH=/home/zidmann/Bureau/GIT/FileAnalyzer/Linux/tmp/fix_report.4.9785.tmp
+------------------------------------------------------
+[i] RULE-01 - Keeping the line with 14 delimiters
+[i] RULE-02 - Removing the line with unknown status column
+[i] RULE-03 - Keeping line with valid letters
+[i] Copying valid lines in original file
+[i] Copying bad lines in anormal file
+ - No bad lines to copy in anormal file
+------------------------------------------------------
+[i] Removing the temporary file /home/zidmann/Bureau/GIT/FileAnalyzer/Linux/tmp/fix_report.1.9785.tmp
+[i] Removing the temporary file /home/zidmann/Bureau/GIT/FileAnalyzer/Linux/tmp/fix_report.2.9785.tmp
+[i] Removing the temporary file /home/zidmann/Bureau/GIT/FileAnalyzer/Linux/tmp/fix_report.3.9785.tmp
+[i] Removing the temporary file /home/zidmann/Bureau/GIT/FileAnalyzer/Linux/tmp/fix_report.4.9785.tmp
+------------------------------------------------------
+Elapsed time : 1 sec
+Ending time  : lun. 08 mars 2021 01:27:42 CET
+------------------------------------------------------
+Exit code = 0
+------------------------------------------------------

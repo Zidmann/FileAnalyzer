@@ -1,0 +1,27 @@
+
+======================================================
+======================================================
+= SCRIPT TO ANALYZE FILES IN A DIRECTORY             =
+======================================================
+======================================================
+Starting time : lun. 08 mars 2021 01:27:26 CET
+Version : 0.0.7
+
+TARGET_DIR=.
+LOG_PATH=/home/zidmann/Bureau/GIT/FileAnalyzer/Linux/log/scan_dir_files.Mr-Hyde.20210308.012726.log
+REPORT_PATH=/home/zidmann/Bureau/GIT/FileAnalyzer/Linux/report/scan_dir_files.Mr-Hyde.20210308.012726.csv
+TMP_PATH=/home/zidmann/Bureau/GIT/FileAnalyzer/Linux/tmp/scan_dir_files.1.9515.tmp
+TMP2_PATH=/home/zidmann/Bureau/GIT/FileAnalyzer/Linux/tmp/scan_dir_files.2.9515.tmp
+------------------------------------------------------
+[i] Analyze of the files
+------------------------------------------------------
+[i] Sort of the information
+------------------------------------------------------
+[i] Removing the temporary file /home/zidmann/Bureau/GIT/FileAnalyzer/Linux/tmp/scan_dir_files.1.9515.tmp
+[i] Removing the temporary file /home/zidmann/Bureau/GIT/FileAnalyzer/Linux/tmp/scan_dir_files.2.9515.tmp
+------------------------------------------------------
+Elapsed time : 0 sec
+Ending time  : lun. 08 mars 2021 01:27:26 CET
+------------------------------------------------------
+Exit code = 0
+------------------------------------------------------
