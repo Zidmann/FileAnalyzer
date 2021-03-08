@@ -19,7 +19,7 @@
 ##################################################################################
 # Beginning of the script - definition of the variables
 ##################################################################################
-SCRIPT_VERSION="0.0.6"
+SCRIPT_VERSION="0.0.7"
 
 # Return code
 RETURN_CODE=0
@@ -140,52 +140,56 @@ HEADER="STATUSCODE\tMD5SUM\tNBLINES\tINODE\tNBBLOCKS\tSIZE\tPERMISSION\tOWNER\tO
 # Elapsed time - begin date
 BEGIN_DATE=$(date +%s)
 
-##################################################################################
-# First console actions - Printing the header and the variables
-##################################################################################
 EXECUTE_EXIT_FUNCTION=1
-echo "" | tee -a "$LOG_PATH"
-echo "======================================================" | tee -a "$LOG_PATH"
-echo "======================================================" | tee -a "$LOG_PATH"
-echo "= SCRIPT TO ANALYZE FILES IN A DIRECTORY             =" | tee -a "$LOG_PATH"
-echo "======================================================" | tee -a "$LOG_PATH"
-echo "======================================================" | tee -a "$LOG_PATH"
 
-echo "Starting time : $(date)"      | tee -a "$LOG_PATH"
-echo "Version : $SCRIPT_VERSION"    | tee -a "$LOG_PATH"
-echo ""                             | tee -a "$LOG_PATH"
-echo "TARGET_DIR=$TARGET_DIR"       | tee -a "$LOG_PATH"
-echo "LOG_PATH=$LOG_PATH"           | tee -a "$LOG_PATH"
-echo "REPORT_PATH=$REPORT_PATH"     | tee -a "$LOG_PATH"
-echo "TMP_PATH=$TMP_PATH"           | tee -a "$LOG_PATH"
-echo "TMP2_PATH=$TMP2_PATH"         | tee -a "$LOG_PATH"
+function main_code(){
+	##################################################################################
+	# First console actions - Printing the header and the variables
+	##################################################################################
+	echo ""
+	echo "======================================================"
+	echo "======================================================"
+	echo "= SCRIPT TO ANALYZE FILES IN A DIRECTORY             ="
+	echo "======================================================"
+	echo "======================================================"
 
-##################################################################################
-# Next console actions - Starting the analyzing
-##################################################################################
-rm -f "$REPORT_PATH" 2>/dev/null
-echo -e "$HEADER" > "$REPORT_PATH"
+	echo "Starting time : $(date)"
+	echo "Version : $SCRIPT_VERSION"
+	echo ""
+	echo "TARGET_DIR=$TARGET_DIR"
+	echo "LOG_PATH=$LOG_PATH"
+	echo "REPORT_PATH=$REPORT_PATH"
+	echo "TMP_PATH=$TMP_PATH"
+	echo "TMP2_PATH=$TMP2_PATH"
 
-##################################################################################
-echo "------------------------------------------------------" | tee -a "$LOG_PATH"
-echo "[i] Analyze of the files" | tee -a "$LOG_PATH"
+	##################################################################################
+	# Next console actions - Starting the analyzing
+	##################################################################################
+	rm -f "$REPORT_PATH" 2>/dev/null
+	echo -e "$HEADER" > "$REPORT_PATH"
 
-find "$TARGET_DIR" -exec "$UTIL_DIR/analyze_file.sh" {} \; 1>"$TMP_PATH" 2>"$TMP2_PATH"
-RETURN_CODE=$([ $? == 0 ] && echo "$RETURN_CODE" || echo "1")
-cat "$TMP2_PATH" | tee -a "$LOG_PATH"
+	##################################################################################
+	echo "------------------------------------------------------"
+	echo "[i] Analyze of the files"
 
-##################################################################################
-echo "------------------------------------------------------" | tee -a "$LOG_PATH"
-echo "[i] Sort of the information" | tee -a "$LOG_PATH"
-sort "$TMP_PATH"  1>"$TMP2_PATH"
-RETURN_CODE=$([ $? == 0 ] && echo "$RETURN_CODE" || echo "1")
+	find "$TARGET_DIR" -exec "$UTIL_DIR/analyze_file.sh" {} \; 1>"$TMP_PATH" 2>"$TMP2_PATH"
+	RETURN_CODE=$([ $? == 0 ] && echo "$RETURN_CODE" || echo "1")
+	cat "$TMP2_PATH"
 
-uniq "$TMP2_PATH" 1>"$TMP_PATH"
-RETURN_CODE=$([ $? == 0 ] && echo "$RETURN_CODE" || echo "1")
+	##################################################################################
+	echo "------------------------------------------------------"
+	echo "[i] Sort of the information"
+	sort "$TMP_PATH"  1>"$TMP2_PATH"
+	RETURN_CODE=$([ $? == 0 ] && echo "$RETURN_CODE" || echo "1")
 
-awk 'BEGIN {FS=OFS="\t"; ORS="\n"}{print $0}' "$TMP_PATH" 1>>"$REPORT_PATH" 
-RETURN_CODE=$([ $? == 0 ] && echo "$RETURN_CODE" || echo "1")
+	uniq "$TMP2_PATH" 1>"$TMP_PATH"
+	RETURN_CODE=$([ $? == 0 ] && echo "$RETURN_CODE" || echo "1")
+
+	awk 'BEGIN {FS=OFS="\t"; ORS="\n"}{print $0}' "$TMP_PATH" 1>>"$REPORT_PATH" 
+	RETURN_CODE=$([ $? == 0 ] && echo "$RETURN_CODE" || echo "1")
+}
+
+main_code 2>&1 | tee -a "$LOG_PATH"
 
 ##################################################################################
 exit "$RETURN_CODE"
-
