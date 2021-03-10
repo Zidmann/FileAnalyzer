@@ -130,7 +130,7 @@ mkdir -p "$(dirname "$REPORT_PATH")"
 LOG_PATH=${3:-"${LOG_DIR}/$PREFIX_NAME.$(hostname).$TODAYDATE.$TODAYTIME.log"}
 mkdir -p "$(dirname "$LOG_PATH")"
 
-# Temporaryfile path
+# Temporary file path
 TMP_PATH="$TMP_DIR/$PREFIX_NAME.1.$$.tmp"
 TMP2_PATH="$TMP_DIR/$PREFIX_NAME.2.$$.tmp"
 mkdir -p "$(dirname "$TMP_PATH")"
