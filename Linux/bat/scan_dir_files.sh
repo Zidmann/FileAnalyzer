@@ -187,9 +187,11 @@ function main_code(){
 
 	awk 'BEGIN {FS=OFS="\t"; ORS="\n"}{print $0}' "$TMP_PATH" 1>>"$REPORT_PATH" 
 	RETURN_CODE=$([ $? == 0 ] && echo "$RETURN_CODE" || echo "1")
-}
 
-main_code 2>&1 | tee -a "$LOG_PATH"
+	exit "$RETURN_CODE"
+}
+main_code > >(tee "$LOG_PATH") 2>&1
+RETURN_CODE=$([ $? == 0 ] && echo "$RETURN_CODE" || echo "1")
 
 ##################################################################################
 exit "$RETURN_CODE"

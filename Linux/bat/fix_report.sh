@@ -221,9 +221,11 @@ function main_code(){
 			echo " - No bad lines to copy in anormal file"
 		fi
 	fi
-}
 
-main_code 2>&1 | tee -a "$LOG_PATH"
+	exit "$RETURN_CODE"
+}
+main_code > >(tee "$LOG_PATH") 2>&1
+RETURN_CODE=$([ $? == 0 ] && echo "$RETURN_CODE" || echo "1")
 
 ##################################################################################
 exit "$RETURN_CODE"
