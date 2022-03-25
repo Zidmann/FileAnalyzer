@@ -1,0 +1,3 @@
+[submodule "Qlik/02_Ressources/QlikLib"]
+	path = Qlik/02_Ressources/qliklib
+	url = git@github.com:Zidmann/QlikLib.git
