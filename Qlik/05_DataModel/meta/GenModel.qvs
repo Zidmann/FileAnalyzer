@@ -21,5 +21,31 @@ call console_info('Loading the reports');
 call file_table_read(vFileAnalyzerQvdFilePath, 'report');
 call console_jumpline;
 
+fileinfo_tmp:
+LOAD FILEPATH,
+     LEFT(PERMISSION, 1) as TMP_TYPE,
+     $(file_dirname_unix(FILEPATH)) as TMP_DIRNAME,
+     $(file_basename_unix(FILEPATH)) as TMP_BASENAME,
+     $(file_extension_unix(FILEPATH)) as TMP_EXTENSION
+RESIDENT report
+;
+
+LEFT JOIN(fileinfo_tmp)
+LOAD FILEPATH,
+     IF(TMP_TYPE='-', 'FILE', IF(TMP_TYPE='d', 'DIR', IF(TMP_TYPE='l', 'LINK', 'OTHER'))) as TMP_TYPE2
+RESIDENT fileinfo_tmp
+;
+
+LEFT JOIN(report)
+LOAD FILEPATH,
+     TMP_TYPE2 as TYPE,
+     IF(TMP_TYPE2<>'DIR', TMP_DIRNAME, FILEPATH) as DIRNAME,
+     IF(TMP_TYPE2<>'DIR', TMP_BASENAME, '') as BASENAME,
+     IF(TMP_TYPE2<>'DIR', TMP_EXTENSION, '') as EXTENSION
+RESIDENT fileinfo_tmp
+;
+
+call table_drop('fileinfo_tmp');
+
 call console_info('End of the script $(vScriptName)');
 call console_delimitation;
