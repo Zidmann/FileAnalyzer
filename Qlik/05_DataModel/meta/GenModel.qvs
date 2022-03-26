@@ -26,7 +26,9 @@ LOAD FILEPATH,
      LEFT(PERMISSION, 1) as TMP_TYPE,
      $(file_dirname_unix(FILEPATH)) as TMP_DIRNAME,
      $(file_basename_unix(FILEPATH)) as TMP_BASENAME,
-     $(file_extension_unix(FILEPATH)) as TMP_EXTENSION
+     $(file_extension_unix(FILEPATH)) as TMP_EXTENSION,
+     $(number_order(NBBLOCKS)) as TMP_BLOCKS_ORDER,
+     $(number_order(NBLINES)) as TMP_LINES_ORDER
 RESIDENT report
 ;
 
@@ -41,7 +43,9 @@ LOAD FILEPATH,
      TMP_TYPE2 as TYPE,
      IF(TMP_TYPE2<>'DIR', TMP_DIRNAME, FILEPATH) as DIRNAME,
      IF(TMP_TYPE2<>'DIR', TMP_BASENAME, '') as BASENAME,
-     IF(TMP_TYPE2<>'DIR', TMP_EXTENSION, '') as EXTENSION
+     IF(TMP_TYPE2<>'DIR', TMP_EXTENSION, '') as EXTENSION,
+     TMP_BLOCKS_ORDER as BLOCKS_ORDER,
+     TMP_LINES_ORDER as LINES_ORDER
 RESIDENT fileinfo_tmp
 ;
 

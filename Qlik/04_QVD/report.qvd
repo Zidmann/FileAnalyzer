@@ -2,13 +2,35 @@
  <QvdTableHeader>
    <QvBuildNo>50624</QvBuildNo>
    <CreatorDoc>C:\Users\Emmanuel\OneDrive\Documents\GitHub\FileAnalyzer\Qlik\03_GenQVD\GenQVD_analyze.qvw</CreatorDoc>
-   <CreateUtcTime>2022-03-26 08:58:09</CreateUtcTime>
+   <CreateUtcTime>2022-03-26 22:47:25</CreateUtcTime>
    <SourceCreateUtcTime></SourceCreateUtcTime>
    <SourceFileUtcTime></SourceFileUtcTime>
    <SourceFileSize>-1</SourceFileSize>
    <StaleUtcTime></StaleUtcTime>
    <TableName>report</TableName>
    <Fields>
+     <QvdFieldHeader>
+       <FieldName>SOURCE</FieldName>
+       <BitOffset>0</BitOffset>
+       <BitWidth>0</BitWidth>
+       <Bias>0</Bias>
+       <NumberFormat>
+         <Type>UNKNOWN</Type>
+         <nDec>0</nDec>
+         <UseThou>0</UseThou>
+         <Fmt></Fmt>
+         <Dec></Dec>
+         <Thou></Thou>
+       </NumberFormat>
+       <NoOfSymbols>1</NoOfSymbols>
+       <Offset>0</Offset>
+       <Length>125</Length>
+       <Comment></Comment>
+       <Tags>
+         <String>$ascii</String>
+         <String>$text</String>
+       </Tags>
+     </QvdFieldHeader>
      <QvdFieldHeader>
        <FieldName>STATUSCODE</FieldName>
        <BitOffset>0</BitOffset>
@@ -23,7 +45,7 @@
          <Thou></Thou>
        </NumberFormat>
        <NoOfSymbols>1</NoOfSymbols>
-       <Offset>0</Offset>
+       <Offset>125</Offset>
        <Length>4</Length>
        <Comment></Comment>
        <Tags>
@@ -45,7 +67,7 @@
          <Thou></Thou>
        </NumberFormat>
        <NoOfSymbols>10</NoOfSymbols>
-       <Offset>4</Offset>
+       <Offset>129</Offset>
        <Length>308</Length>
        <Comment></Comment>
        <Tags>
@@ -67,7 +89,7 @@
          <Thou></Thou>
        </NumberFormat>
        <NoOfSymbols>9</NoOfSymbols>
-       <Offset>312</Offset>
+       <Offset>437</Offset>
        <Length>66</Length>
        <Comment></Comment>
        <Tags></Tags>
@@ -86,7 +108,7 @@
          <Thou></Thou>
        </NumberFormat>
        <NoOfSymbols>18</NoOfSymbols>
-       <Offset>378</Offset>
+       <Offset>503</Offset>
        <Length>234</Length>
        <Comment></Comment>
        <Tags>
@@ -108,7 +130,7 @@
          <Thou></Thou>
        </NumberFormat>
        <NoOfSymbols>3</NoOfSymbols>
-       <Offset>612</Offset>
+       <Offset>737</Offset>
        <Length>22</Length>
        <Comment></Comment>
        <Tags>
@@ -130,7 +152,7 @@
          <Thou></Thou>
        </NumberFormat>
        <NoOfSymbols>11</NoOfSymbols>
-       <Offset>634</Offset>
+       <Offset>759</Offset>
        <Length>100</Length>
        <Comment></Comment>
        <Tags>
@@ -152,7 +174,7 @@
          <Thou></Thou>
        </NumberFormat>
        <NoOfSymbols>4</NoOfSymbols>
-       <Offset>734</Offset>
+       <Offset>859</Offset>
        <Length>48</Length>
        <Comment></Comment>
        <Tags>
@@ -174,7 +196,7 @@
          <Thou></Thou>
        </NumberFormat>
        <NoOfSymbols>1</NoOfSymbols>
-       <Offset>782</Offset>
+       <Offset>907</Offset>
        <Length>10</Length>
        <Comment></Comment>
        <Tags>
@@ -196,7 +218,7 @@
          <Thou></Thou>
        </NumberFormat>
        <NoOfSymbols>1</NoOfSymbols>
-       <Offset>792</Offset>
+       <Offset>917</Offset>
        <Length>9</Length>
        <Comment></Comment>
        <Tags>
@@ -218,7 +240,7 @@
          <Thou></Thou>
        </NumberFormat>
        <NoOfSymbols>1</NoOfSymbols>
-       <Offset>801</Offset>
+       <Offset>926</Offset>
        <Length>10</Length>
        <Comment></Comment>
        <Tags>
@@ -240,7 +262,7 @@
          <Thou></Thou>
        </NumberFormat>
        <NoOfSymbols>1</NoOfSymbols>
-       <Offset>811</Offset>
+       <Offset>936</Offset>
        <Length>9</Length>
        <Comment></Comment>
        <Tags>
@@ -262,7 +284,7 @@
          <Thou></Thou>
        </NumberFormat>
        <NoOfSymbols>10</NoOfSymbols>
-       <Offset>820</Offset>
+       <Offset>945</Offset>
        <Length>370</Length>
        <Comment></Comment>
        <Tags>
@@ -284,7 +306,7 @@
          <Thou></Thou>
        </NumberFormat>
        <NoOfSymbols>9</NoOfSymbols>
-       <Offset>1190</Offset>
+       <Offset>1315</Offset>
        <Length>333</Length>
        <Comment></Comment>
        <Tags>
@@ -306,7 +328,7 @@
          <Thou></Thou>
        </NumberFormat>
        <NoOfSymbols>7</NoOfSymbols>
-       <Offset>1523</Offset>
+       <Offset>1648</Offset>
        <Length>259</Length>
        <Comment></Comment>
        <Tags>
@@ -328,7 +350,7 @@
          <Thou></Thou>
        </NumberFormat>
        <NoOfSymbols>18</NoOfSymbols>
-       <Offset>1782</Offset>
+       <Offset>1907</Offset>
        <Length>385</Length>
        <Comment></Comment>
        <Tags>
@@ -340,12 +362,12 @@
    <Compression></Compression>
    <RecordByteSize>5</RecordByteSize>
    <NoOfRecords>18</NoOfRecords>
-   <Offset>2167</Offset>
+   <Offset>2292</Offset>
    <Length>90</Length>
    <Lineage></Lineage>
    <Comment></Comment>
    <EncryptionInfo></EncryptionInfo>
  </QvdTableHeader>
- OK 0c53c6608a32d69d49ea65753844c0e0  1f5fe86757b1d9d4a6b2961df450382c 4cd13bc4bdaf12bc089c19405e893aa0 65399a930e634b6aeeb2504a4079a953 692062bd3f30cb02ae38e7c9a87b2cca 8f973977a9827e8a07aea754cbae626d d41d8cd98f00b204e9800998ecf8427e d7a639e82281d2409e610a2038cacab2 f0bcb38666116a5010acccfaa0336b7d 1   49  ù   157 	   9 Ê   230    1     0 √   195    16 Ó  1310958 ≠  1310893 ≤  1310898 '  1318951 +  1318955 -  1318957 /  1318959 @@ 1327168 A@ 1327169 K@ 1327179 ±  1310897 í  1310866 ©  1310889 ê  1310864 ´  1310891 ï  1310869 ™  1310890 ç  1310861    8     0    16 ◊  983 
+ C:\Users\Emmanuel\OneDrive\Documents\GitHub\FileAnalyzer\Qlik\02_Ressources\data\scan_dir_files.Mr-Hyde.20210308.012726.csv OK 0c53c6608a32d69d49ea65753844c0e0  1f5fe86757b1d9d4a6b2961df450382c 4cd13bc4bdaf12bc089c19405e893aa0 65399a930e634b6aeeb2504a4079a953 692062bd3f30cb02ae38e7c9a87b2cca 8f973977a9827e8a07aea754cbae626d d41d8cd98f00b204e9800998ecf8427e d7a639e82281d2409e610a2038cacab2 f0bcb38666116a5010acccfaa0336b7d 1   49  ù   157 	   9 Ê   230    1     0 √   195    16 Ó  1310958 ≠  1310893 ≤  1310898 '  1318951 +  1318955 -  1318957 /  1318959 @@ 1327168 A@ 1327169 K@ 1327179 ±  1310897 í  1310866 ©  1310889 ê  1310864 ´  1310891 ï  1310869 ™  1310890 ç  1310861    8     0    16 ◊  983 
    10    4096 Ç  386 ”  1747   7958 ã   139 Ï   236     0 8  6456 &  806 -rwxrwxr-x lrwxrwxrwx drwxrwxr-x -rw-rw-r-- Ë  1000 zidmann Ë  1000 zidmann 2021-03-08 00:23:55.068306978 +0100 2021-03-07 23:46:20.446234362 +0100 2021-03-08 01:05:46.518158017 +0100 2021-03-08 00:06:10.247897233 +0100 2021-03-08 00:24:05.596370537 +0100 2021-03-08 01:27:26.355812277 +0100 2021-03-08 01:27:26.363812329 +0100 2021-03-08 00:06:52.724376112 +0100 2021-03-08 01:27:26.371812382 +0100 2021-03-08 00:36:39.658287644 +0100 2021-03-08 00:23:52.612292123 +0100 2021-03-07 23:46:20.442234349 +0100 2021-03-08 01:27:26.363812329 +0100 2021-03-08 00:35:39.577801483 +0100 2021-03-08 00:23:52.640292293 +0100 2021-03-08 01:27:26.371812382 +0100 2021-03-08 01:27:26.471813042 +0100 2021-03-08 00:35:39.509800923 +0100 2021-03-08 00:29:17.522225320 +0100 2021-03-08 00:23:52.640292293 +0100 2021-03-07 23:46:20.442234349 +0100 2021-03-08 01:27:26.363812329 +0100 2021-03-08 00:35:39.577801483 +0100 2021-03-08 01:27:26.371812382 +0100 2021-03-08 01:27:26.471813042 +0100 2021-03-08 00:29:17.558225710 +0100 ./util/analyze_file.sh ./conf/fix_report.env ./conf/scan_dir_files.env . ./bat ./conf ./util ./report ./log ./tmp ./conf/letters_valid.conf ./tmp/scan_dir_files.1.9515.tmp ./bat/fix_report.sh ./report/scan_dir_files.Mr-Hyde.20210308.012726.csv ./conf/common.env ./tmp/scan_dir_files.2.9515.tmp ./bat/scan_dir_files.sh ./log/scan_dir_files.Mr-Hyde.20210308.012726.log      EDDHEDÑHDH»êDàôD»DâDëÅDH’°Dà¢	DàU¢
 àÃÖ Ã⁄ÍUTV„ÿ‹ÖÀù!÷„‚e"4$*V‰

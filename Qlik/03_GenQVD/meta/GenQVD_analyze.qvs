@@ -21,7 +21,8 @@ call console_jumpline;
 // Then we overwrite the function '_file_auxi_load' to precise the option and the columns names.
 Sub _file_auxi_load(vFilePath, vTableName, vPathInclude)
     $(vTableName):
-    LOAD STATUSCODE,
+    LOAD '$(vFilePath)' as SOURCE,
+         STATUSCODE,
          MD5SUM,
          NBLINES,
          INODE,
