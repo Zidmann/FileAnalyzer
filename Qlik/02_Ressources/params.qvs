@@ -9,7 +9,7 @@
 
 SET vRessourcesPath='..\02_Ressources';
 LET vQliklibPath='$(vRessourcesPath)\qliklib';
-LET vFileAnalyzerPatternPath='$(vRessourcesPath)\data\scan_dir_files.*.????????.??????.csv;
+LET vFileAnalyzerPatternPath='$(vRessourcesPath)\data\scan_dir_files.*.????????.??????.csv';
 
 SET vQvdPath='..\04_QVD';
 LET vFileAnalyzerQvdFilePath='$(vQvdPath)\report.qvd';

@@ -1,0 +1,25 @@
+// ----------------------------------------------------------------------------------------------------------------
+/*
+    Author      : Zidmann (emmanuel.zidel@gmail.com)
+    Script      : GenModel.qvs
+    Version     : 0.1.0
+    Description : Script to create the main model used in the different Qlik dashboards
+ */
+// ----------------------------------------------------------------------------------------------------------------
+// Including the variables and the functions available in the Qlik custom library
+$(Must_Include='..\02_Ressources\params.qvs');
+$(Must_Include='$(vQliklibPath)\core.qvs');
+
+SET vScriptName='GenModel';
+
+// ----------------------------------------------------------------------------------------------------------------
+//
+call console_info('Loading of the script $(vScriptName)');
+call console_jumpline;
+
+call console_info('Loading the reports');
+call file_table_read(vFileAnalyzerQvdFilePath, 'report');
+call console_jumpline;
+
+call console_info('End of the script $(vScriptName)');
+call console_delimitation;
