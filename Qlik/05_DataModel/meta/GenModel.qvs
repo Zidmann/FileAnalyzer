@@ -16,40 +16,130 @@ SET vScriptName='GenModel';
 //
 call console_info('Loading of the script $(vScriptName)');
 call console_jumpline;
-
-call console_info('Loading the reports');
-call file_table_read(vFileAnalyzerQvdFilePath, 'report');
+call console_info('Loading the analyze reports');
+call file_table_read(vFileAnalyzerQvdFilePath, 'analyzeReport');
 call console_jumpline;
 
-fileinfo_tmp:
-LOAD FILEPATH,
+call console_info('Loading the mapping between a source and its associated label');
+call file_table_read(vSourceLabelMappingQvdFilePath, 'mappingSourceLabel');
+call console_jumpline;
+
+call console_info('Define the final mapping between the source filepath and the label');
+sourceRegister:
+LOAD DISTINCT SOURCE,
+              $(file_basename(SOURCE)) as TMP_SOURCE_FILENAME
+RESIDENT analyzeReport
+;
+
+tmp_mappingSourceLabel:
+LOAD FILENAME as TMP_SOURCE_FILENAME,
+     MINSTRING(LABEL) as TMP_LABEL_CONTENT,
+     COUNT(DISTINCT LABEL) as TMP_LABEL_DUPLICATES
+RESIDENT mappingSourceLabel
+GROUP BY FILENAME
+;
+call table_drop('mappingSourceLabel');
+
+// Select the label when there is no confusion
+LEFT JOIN(sourceRegister)
+LOAD TMP_SOURCE_FILENAME,
+     TMP_LABEL_CONTENT as TMP_LABEL
+RESIDENT tmp_mappingSourceLabel
+WHERE TMP_LABEL_DUPLICATES=1
+;
+call table_drop('tmp_mappingSourceLabel');
+call column_drop('sourceRegister', 'TMP_SOURCE_FILENAME');
+
+// Use the source path if the label is not defined
+LEFT JOIN(sourceRegister)
+LOAD SOURCE,
+     IF(TMP_LABEL='', SOURCE, TMP_LABEL) as SOURCE_LABEL
+RESIDENT sourceRegister
+;
+call column_drop('sourceRegister', 'TMP_LABEL');
+call console_jumpline;
+
+LEFT JOIN(analyzeReport)
+LOAD SOURCE,
+     SOURCE_LABEL
+RESIDENT sourceRegister
+;
+call column_drop('analyzeReport', 'SOURCE');
+
+call console_info('Add the new columns in the reports');
+tmp_analyzeReport:
+NoConcatenate
+LOAD rowno() as ID_FILE,
+     SOURCE_LABEL,
+     FILEPATH,
+     MD5SUM,
+     STATUSCODE,
+     INODE,
+     OWNERID,
+     OWNER,
+     GROUPID,
+     GROUP,
+     LASTACCESS,
+     LASTMODIFICATION,
+     LASTSTATUSCHANGE,
+     NBBLOCKS,
+     $(number_order(NBBLOCKS)) as NBBLOCKS_ORDER,
+     NBLINES,
+     $(number_order(NBLINES)) as NBLINES_ORDER,
+     SIZE,
+     $(filesize_readable(SIZE)) as SIZE_READABLE,
      LEFT(PERMISSION, 1) as TMP_TYPE,
      $(file_dirname_unix(FILEPATH)) as TMP_DIRNAME,
      $(file_basename_unix(FILEPATH)) as TMP_BASENAME,
-     $(file_extension_unix(FILEPATH)) as TMP_EXTENSION,
-     $(number_order(NBBLOCKS)) as TMP_BLOCKS_ORDER,
-     $(number_order(NBLINES)) as TMP_LINES_ORDER
-RESIDENT report
+     $(file_extension_unix(FILEPATH)) as TMP_EXTENSION
+RESIDENT analyzeReport
+ORDER BY SOURCE_LABEL, FILEPATH, STATUSCODE
 ;
+call table_drop('analyzeReport');
+call table_rename('tmp_analyzeReport', 'analyzeReport');
 
-LEFT JOIN(fileinfo_tmp)
-LOAD FILEPATH,
-     IF(TMP_TYPE='-', 'FILE', IF(TMP_TYPE='d', 'DIR', IF(TMP_TYPE='l', 'LINK', 'OTHER'))) as TMP_TYPE2
-RESIDENT fileinfo_tmp
+tmp_analyzeReport:
+LOAD ID_FILE,
+     IF(TMP_TYPE='-', 'FILE', IF(TMP_TYPE='d', 'DIR', IF(TMP_TYPE='l', 'LINK', 'OTHER'))) as OBJECT_TYPE,
+	 FILEPATH as TMP_FILEPATH,
+     TMP_DIRNAME,
+     TMP_BASENAME,
+     TMP_EXTENSION
+RESIDENT analyzeReport
 ;
+call column_drop('analyzeReport', 'TMP_TYPE');
+call column_drop('analyzeReport', 'TMP_DIRNAME');
+call column_drop('analyzeReport', 'TMP_BASENAME');
+call column_drop('analyzeReport', 'TMP_EXTENSION');
 
-LEFT JOIN(report)
-LOAD FILEPATH,
-     TMP_TYPE2 as TYPE,
-     IF(TMP_TYPE2<>'DIR', TMP_DIRNAME, FILEPATH) as DIRNAME,
-     IF(TMP_TYPE2<>'DIR', TMP_BASENAME, '') as BASENAME,
-     IF(TMP_TYPE2<>'DIR', TMP_EXTENSION, '') as EXTENSION,
-     TMP_BLOCKS_ORDER as BLOCKS_ORDER,
-     TMP_LINES_ORDER as LINES_ORDER
-RESIDENT fileinfo_tmp
+tmp2_analyzeReport:
+LOAD ID_FILE,
+     OBJECT_TYPE,
+     IF(OBJECT_TYPE<>'DIR', TMP_DIRNAME, '')            as DIRNAME,
+     IF(OBJECT_TYPE<>'DIR', TMP_BASENAME, TMP_FILEPATH) as BASENAME,
+     IF(OBJECT_TYPE<>'DIR', TMP_EXTENSION, '')          as EXTENSION
+RESIDENT tmp_analyzeReport
 ;
+call table_drop('tmp_analyzeReport');
 
-call table_drop('fileinfo_tmp');
+LEFT JOIN(analyzeReport)
+LOAD ID_FILE,
+     OBJECT_TYPE,
+     DIRNAME,
+     BASENAME,
+     EXTENSION
+RESIDENT tmp2_analyzeReport
+;
+call table_drop('tmp2_analyzeReport');
+
+call console_info('Identify the files present several times in the same report');
+fileDuplicate:
+LOAD SOURCE_LABEL,
+     FILEPATH,
+     IF(COUNT(1)=1, 'NO', 'YES') as DUPLICATED
+RESIDENT analyzeReport
+GROUP BY SOURCE_LABEL, FILEPATH
+;
 
 call console_info('End of the script $(vScriptName)');
 call console_delimitation;

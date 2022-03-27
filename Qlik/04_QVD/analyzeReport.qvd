@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
  <QvdTableHeader>
    <QvBuildNo>50624</QvBuildNo>
-   <CreatorDoc>C:\Users\Emmanuel\OneDrive\Documents\GitHub\FileAnalyzer\Qlik\03_GenQVD\GenQVD_analyze.qvw</CreatorDoc>
-   <CreateUtcTime>2022-03-26 22:47:25</CreateUtcTime>
+   <CreatorDoc>C:\Users\Emmanuel\OneDrive\Documents\GitHub\FileAnalyzer\Qlik\03_GenQVD\GenQVD_analyzeReport.qvw</CreatorDoc>
+   <CreateUtcTime>2022-03-27 16:24:47</CreateUtcTime>
    <SourceCreateUtcTime></SourceCreateUtcTime>
    <SourceFileUtcTime></SourceFileUtcTime>
    <SourceFileSize>-1</SourceFileSize>
    <StaleUtcTime></StaleUtcTime>
-   <TableName>report</TableName>
+   <TableName>analyzeReport</TableName>
    <Fields>
      <QvdFieldHeader>
        <FieldName>SOURCE</FieldName>

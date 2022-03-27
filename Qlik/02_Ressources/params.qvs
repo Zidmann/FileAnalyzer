@@ -9,7 +9,9 @@
 
 SET vRessourcesPath='..\02_Ressources';
 LET vQliklibPath='$(vRessourcesPath)\qliklib';
+LET vSourceLabelMappingPath='$(vRessourcesPath)\data\source_labels.csv';
 LET vFileAnalyzerPatternPath='$(vRessourcesPath)\data\scan_dir_files.*.????????.??????.csv';
 
 SET vQvdPath='..\04_QVD';
-LET vFileAnalyzerQvdFilePath='$(vQvdPath)\report.qvd';
+LET vSourceLabelMappingQvdFilePath='$(vQvdPath)\sourceLabel.qvd';
+LET vFileAnalyzerQvdFilePath='$(vQvdPath)\analyzeReport.qvd';
