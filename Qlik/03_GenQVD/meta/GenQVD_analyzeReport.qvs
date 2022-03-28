@@ -46,6 +46,7 @@ SET vTableName='analyzeReport';
 call file_table_multiple_read(vFileAnalyzerPatternPath, vTableName);
 call table_file_write(vTableName, vFileAnalyzerQvdFilePath);
 call table_drop(vTableName);
+call console_jumpline;
 
 call console_info('End of the script $(vScriptName)');
 call console_delimitation;

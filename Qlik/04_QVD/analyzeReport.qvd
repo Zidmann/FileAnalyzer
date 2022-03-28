@@ -2,7 +2,7 @@
  <QvdTableHeader>
    <QvBuildNo>50624</QvBuildNo>
    <CreatorDoc>C:\Users\Emmanuel\OneDrive\Documents\GitHub\FileAnalyzer\Qlik\03_GenQVD\GenQVD_analyzeReport.qvw</CreatorDoc>
-   <CreateUtcTime>2022-03-27 16:24:47</CreateUtcTime>
+   <CreateUtcTime>2022-03-28 16:49:22</CreateUtcTime>
    <SourceCreateUtcTime></SourceCreateUtcTime>
    <SourceFileUtcTime></SourceFileUtcTime>
    <SourceFileSize>-1</SourceFileSize>
@@ -11,114 +11,7 @@
    <Fields>
      <QvdFieldHeader>
        <FieldName>SOURCE</FieldName>
-       <BitOffset>0</BitOffset>
-       <BitWidth>0</BitWidth>
-       <Bias>0</Bias>
-       <NumberFormat>
-         <Type>UNKNOWN</Type>
-         <nDec>0</nDec>
-         <UseThou>0</UseThou>
-         <Fmt></Fmt>
-         <Dec></Dec>
-         <Thou></Thou>
-       </NumberFormat>
-       <NoOfSymbols>1</NoOfSymbols>
-       <Offset>0</Offset>
-       <Length>125</Length>
-       <Comment></Comment>
-       <Tags>
-         <String>$ascii</String>
-         <String>$text</String>
-       </Tags>
-     </QvdFieldHeader>
-     <QvdFieldHeader>
-       <FieldName>STATUSCODE</FieldName>
-       <BitOffset>0</BitOffset>
-       <BitWidth>0</BitWidth>
-       <Bias>0</Bias>
-       <NumberFormat>
-         <Type>UNKNOWN</Type>
-         <nDec>0</nDec>
-         <UseThou>0</UseThou>
-         <Fmt></Fmt>
-         <Dec></Dec>
-         <Thou></Thou>
-       </NumberFormat>
-       <NoOfSymbols>1</NoOfSymbols>
-       <Offset>125</Offset>
-       <Length>4</Length>
-       <Comment></Comment>
-       <Tags>
-         <String>$ascii</String>
-         <String>$text</String>
-       </Tags>
-     </QvdFieldHeader>
-     <QvdFieldHeader>
-       <FieldName>MD5SUM</FieldName>
-       <BitOffset>10</BitOffset>
-       <BitWidth>4</BitWidth>
-       <Bias>0</Bias>
-       <NumberFormat>
-         <Type>UNKNOWN</Type>
-         <nDec>0</nDec>
-         <UseThou>0</UseThou>
-         <Fmt></Fmt>
-         <Dec></Dec>
-         <Thou></Thou>
-       </NumberFormat>
-       <NoOfSymbols>10</NoOfSymbols>
-       <Offset>129</Offset>
-       <Length>308</Length>
-       <Comment></Comment>
-       <Tags>
-         <String>$ascii</String>
-         <String>$text</String>
-       </Tags>
-     </QvdFieldHeader>
-     <QvdFieldHeader>
-       <FieldName>NBLINES</FieldName>
-       <BitOffset>14</BitOffset>
-       <BitWidth>4</BitWidth>
-       <Bias>0</Bias>
-       <NumberFormat>
-         <Type>UNKNOWN</Type>
-         <nDec>0</nDec>
-         <UseThou>0</UseThou>
-         <Fmt></Fmt>
-         <Dec></Dec>
-         <Thou></Thou>
-       </NumberFormat>
-       <NoOfSymbols>9</NoOfSymbols>
-       <Offset>437</Offset>
-       <Length>66</Length>
-       <Comment></Comment>
-       <Tags></Tags>
-     </QvdFieldHeader>
-     <QvdFieldHeader>
-       <FieldName>INODE</FieldName>
-       <BitOffset>0</BitOffset>
-       <BitWidth>8</BitWidth>
-       <Bias>0</Bias>
-       <NumberFormat>
-         <Type>UNKNOWN</Type>
-         <nDec>0</nDec>
-         <UseThou>0</UseThou>
-         <Fmt></Fmt>
-         <Dec></Dec>
-         <Thou></Thou>
-       </NumberFormat>
-       <NoOfSymbols>18</NoOfSymbols>
-       <Offset>503</Offset>
-       <Length>234</Length>
-       <Comment></Comment>
-       <Tags>
-         <String>$numeric</String>
-         <String>$integer</String>
-       </Tags>
-     </QvdFieldHeader>
-     <QvdFieldHeader>
-       <FieldName>NBBLOCKS</FieldName>
-       <BitOffset>8</BitOffset>
+       <BitOffset>49</BitOffset>
        <BitWidth>2</BitWidth>
        <Bias>0</Bias>
        <NumberFormat>
@@ -130,52 +23,8 @@
          <Thou></Thou>
        </NumberFormat>
        <NoOfSymbols>3</NoOfSymbols>
-       <Offset>737</Offset>
-       <Length>22</Length>
-       <Comment></Comment>
-       <Tags>
-         <String>$numeric</String>
-         <String>$integer</String>
-       </Tags>
-     </QvdFieldHeader>
-     <QvdFieldHeader>
-       <FieldName>SIZE</FieldName>
-       <BitOffset>18</BitOffset>
-       <BitWidth>4</BitWidth>
-       <Bias>0</Bias>
-       <NumberFormat>
-         <Type>UNKNOWN</Type>
-         <nDec>0</nDec>
-         <UseThou>0</UseThou>
-         <Fmt></Fmt>
-         <Dec></Dec>
-         <Thou></Thou>
-       </NumberFormat>
-       <NoOfSymbols>11</NoOfSymbols>
-       <Offset>759</Offset>
-       <Length>100</Length>
-       <Comment></Comment>
-       <Tags>
-         <String>$numeric</String>
-         <String>$integer</String>
-       </Tags>
-     </QvdFieldHeader>
-     <QvdFieldHeader>
-       <FieldName>PERMISSION</FieldName>
-       <BitOffset>38</BitOffset>
-       <BitWidth>2</BitWidth>
-       <Bias>0</Bias>
-       <NumberFormat>
-         <Type>UNKNOWN</Type>
-         <nDec>0</nDec>
-         <UseThou>0</UseThou>
-         <Fmt></Fmt>
-         <Dec></Dec>
-         <Thou></Thou>
-       </NumberFormat>
-       <NoOfSymbols>4</NoOfSymbols>
-       <Offset>859</Offset>
-       <Length>48</Length>
+       <Offset>0</Offset>
+       <Length>375</Length>
        <Comment></Comment>
        <Tags>
          <String>$ascii</String>
@@ -183,9 +32,9 @@
        </Tags>
      </QvdFieldHeader>
      <QvdFieldHeader>
-       <FieldName>OWNER</FieldName>
-       <BitOffset>0</BitOffset>
-       <BitWidth>0</BitWidth>
+       <FieldName>STATUSCODE</FieldName>
+       <BitOffset>51</BitOffset>
+       <BitWidth>1</BitWidth>
        <Bias>0</Bias>
        <NumberFormat>
          <Type>UNKNOWN</Type>
@@ -195,30 +44,8 @@
          <Dec></Dec>
          <Thou></Thou>
        </NumberFormat>
-       <NoOfSymbols>1</NoOfSymbols>
-       <Offset>907</Offset>
-       <Length>10</Length>
-       <Comment></Comment>
-       <Tags>
-         <String>$numeric</String>
-         <String>$integer</String>
-       </Tags>
-     </QvdFieldHeader>
-     <QvdFieldHeader>
-       <FieldName>OWNERID</FieldName>
-       <BitOffset>0</BitOffset>
-       <BitWidth>0</BitWidth>
-       <Bias>0</Bias>
-       <NumberFormat>
-         <Type>UNKNOWN</Type>
-         <nDec>0</nDec>
-         <UseThou>0</UseThou>
-         <Fmt></Fmt>
-         <Dec></Dec>
-         <Thou></Thou>
-       </NumberFormat>
-       <NoOfSymbols>1</NoOfSymbols>
-       <Offset>917</Offset>
+       <NoOfSymbols>2</NoOfSymbols>
+       <Offset>375</Offset>
        <Length>9</Length>
        <Comment></Comment>
        <Tags>
@@ -227,118 +54,8 @@
        </Tags>
      </QvdFieldHeader>
      <QvdFieldHeader>
-       <FieldName>GROUP</FieldName>
-       <BitOffset>0</BitOffset>
-       <BitWidth>0</BitWidth>
-       <Bias>0</Bias>
-       <NumberFormat>
-         <Type>UNKNOWN</Type>
-         <nDec>0</nDec>
-         <UseThou>0</UseThou>
-         <Fmt></Fmt>
-         <Dec></Dec>
-         <Thou></Thou>
-       </NumberFormat>
-       <NoOfSymbols>1</NoOfSymbols>
-       <Offset>926</Offset>
-       <Length>10</Length>
-       <Comment></Comment>
-       <Tags>
-         <String>$numeric</String>
-         <String>$integer</String>
-       </Tags>
-     </QvdFieldHeader>
-     <QvdFieldHeader>
-       <FieldName>GROUPID</FieldName>
-       <BitOffset>0</BitOffset>
-       <BitWidth>0</BitWidth>
-       <Bias>0</Bias>
-       <NumberFormat>
-         <Type>UNKNOWN</Type>
-         <nDec>0</nDec>
-         <UseThou>0</UseThou>
-         <Fmt></Fmt>
-         <Dec></Dec>
-         <Thou></Thou>
-       </NumberFormat>
-       <NoOfSymbols>1</NoOfSymbols>
-       <Offset>936</Offset>
-       <Length>9</Length>
-       <Comment></Comment>
-       <Tags>
-         <String>$ascii</String>
-         <String>$text</String>
-       </Tags>
-     </QvdFieldHeader>
-     <QvdFieldHeader>
-       <FieldName>LASTACCESS</FieldName>
-       <BitOffset>22</BitOffset>
-       <BitWidth>4</BitWidth>
-       <Bias>0</Bias>
-       <NumberFormat>
-         <Type>UNKNOWN</Type>
-         <nDec>0</nDec>
-         <UseThou>0</UseThou>
-         <Fmt></Fmt>
-         <Dec></Dec>
-         <Thou></Thou>
-       </NumberFormat>
-       <NoOfSymbols>10</NoOfSymbols>
-       <Offset>945</Offset>
-       <Length>370</Length>
-       <Comment></Comment>
-       <Tags>
-         <String>$ascii</String>
-         <String>$text</String>
-       </Tags>
-     </QvdFieldHeader>
-     <QvdFieldHeader>
-       <FieldName>LASTMODIFICATION</FieldName>
-       <BitOffset>26</BitOffset>
-       <BitWidth>4</BitWidth>
-       <Bias>0</Bias>
-       <NumberFormat>
-         <Type>UNKNOWN</Type>
-         <nDec>0</nDec>
-         <UseThou>0</UseThou>
-         <Fmt></Fmt>
-         <Dec></Dec>
-         <Thou></Thou>
-       </NumberFormat>
-       <NoOfSymbols>9</NoOfSymbols>
-       <Offset>1315</Offset>
-       <Length>333</Length>
-       <Comment></Comment>
-       <Tags>
-         <String>$ascii</String>
-         <String>$text</String>
-       </Tags>
-     </QvdFieldHeader>
-     <QvdFieldHeader>
-       <FieldName>LASTSTATUSCHANGE</FieldName>
-       <BitOffset>35</BitOffset>
-       <BitWidth>3</BitWidth>
-       <Bias>0</Bias>
-       <NumberFormat>
-         <Type>UNKNOWN</Type>
-         <nDec>0</nDec>
-         <UseThou>0</UseThou>
-         <Fmt></Fmt>
-         <Dec></Dec>
-         <Thou></Thou>
-       </NumberFormat>
-       <NoOfSymbols>7</NoOfSymbols>
-       <Offset>1648</Offset>
-       <Length>259</Length>
-       <Comment></Comment>
-       <Tags>
-         <String>$ascii</String>
-         <String>$text</String>
-       </Tags>
-     </QvdFieldHeader>
-     <QvdFieldHeader>
-       <FieldName>FILEPATH</FieldName>
-       <BitOffset>30</BitOffset>
+       <FieldName>MD5SUM</FieldName>
+       <BitOffset>14</BitOffset>
        <BitWidth>5</BitWidth>
        <Bias>0</Bias>
        <NumberFormat>
@@ -349,9 +66,277 @@
          <Dec></Dec>
          <Thou></Thou>
        </NumberFormat>
-       <NoOfSymbols>18</NoOfSymbols>
-       <Offset>1907</Offset>
-       <Length>385</Length>
+       <NoOfSymbols>22</NoOfSymbols>
+       <Offset>384</Offset>
+       <Length>716</Length>
+       <Comment></Comment>
+       <Tags>
+         <String>$ascii</String>
+         <String>$text</String>
+       </Tags>
+     </QvdFieldHeader>
+     <QvdFieldHeader>
+       <FieldName>NBLINES</FieldName>
+       <BitOffset>45</BitOffset>
+       <BitWidth>4</BitWidth>
+       <Bias>0</Bias>
+       <NumberFormat>
+         <Type>UNKNOWN</Type>
+         <nDec>0</nDec>
+         <UseThou>0</UseThou>
+         <Fmt></Fmt>
+         <Dec></Dec>
+         <Thou></Thou>
+       </NumberFormat>
+       <NoOfSymbols>16</NoOfSymbols>
+       <Offset>1100</Offset>
+       <Length>130</Length>
+       <Comment></Comment>
+       <Tags></Tags>
+     </QvdFieldHeader>
+     <QvdFieldHeader>
+       <FieldName>INODE</FieldName>
+       <BitOffset>19</BitOffset>
+       <BitWidth>5</BitWidth>
+       <Bias>0</Bias>
+       <NumberFormat>
+         <Type>UNKNOWN</Type>
+         <nDec>0</nDec>
+         <UseThou>0</UseThou>
+         <Fmt></Fmt>
+         <Dec></Dec>
+         <Thou></Thou>
+       </NumberFormat>
+       <NoOfSymbols>30</NoOfSymbols>
+       <Offset>1230</Offset>
+       <Length>379</Length>
+       <Comment></Comment>
+       <Tags></Tags>
+     </QvdFieldHeader>
+     <QvdFieldHeader>
+       <FieldName>NBBLOCKS</FieldName>
+       <BitOffset>8</BitOffset>
+       <BitWidth>3</BitWidth>
+       <Bias>0</Bias>
+       <NumberFormat>
+         <Type>UNKNOWN</Type>
+         <nDec>0</nDec>
+         <UseThou>0</UseThou>
+         <Fmt></Fmt>
+         <Dec></Dec>
+         <Thou></Thou>
+       </NumberFormat>
+       <NoOfSymbols>6</NoOfSymbols>
+       <Offset>1609</Offset>
+       <Length>44</Length>
+       <Comment></Comment>
+       <Tags></Tags>
+     </QvdFieldHeader>
+     <QvdFieldHeader>
+       <FieldName>SIZE</FieldName>
+       <BitOffset>24</BitOffset>
+       <BitWidth>5</BitWidth>
+       <Bias>0</Bias>
+       <NumberFormat>
+         <Type>UNKNOWN</Type>
+         <nDec>0</nDec>
+         <UseThou>0</UseThou>
+         <Fmt></Fmt>
+         <Dec></Dec>
+         <Thou></Thou>
+       </NumberFormat>
+       <NoOfSymbols>23</NoOfSymbols>
+       <Offset>1653</Offset>
+       <Length>217</Length>
+       <Comment></Comment>
+       <Tags></Tags>
+     </QvdFieldHeader>
+     <QvdFieldHeader>
+       <FieldName>PERMISSION</FieldName>
+       <BitOffset>11</BitOffset>
+       <BitWidth>3</BitWidth>
+       <Bias>0</Bias>
+       <NumberFormat>
+         <Type>UNKNOWN</Type>
+         <nDec>0</nDec>
+         <UseThou>0</UseThou>
+         <Fmt></Fmt>
+         <Dec></Dec>
+         <Thou></Thou>
+       </NumberFormat>
+       <NoOfSymbols>5</NoOfSymbols>
+       <Offset>1870</Offset>
+       <Length>50</Length>
+       <Comment></Comment>
+       <Tags>
+         <String>$ascii</String>
+         <String>$text</String>
+       </Tags>
+     </QvdFieldHeader>
+     <QvdFieldHeader>
+       <FieldName>OWNER</FieldName>
+       <BitOffset>52</BitOffset>
+       <BitWidth>1</BitWidth>
+       <Bias>0</Bias>
+       <NumberFormat>
+         <Type>UNKNOWN</Type>
+         <nDec>0</nDec>
+         <UseThou>0</UseThou>
+         <Fmt></Fmt>
+         <Dec></Dec>
+         <Thou></Thou>
+       </NumberFormat>
+       <NoOfSymbols>2</NoOfSymbols>
+       <Offset>1920</Offset>
+       <Length>12</Length>
+       <Comment></Comment>
+       <Tags></Tags>
+     </QvdFieldHeader>
+     <QvdFieldHeader>
+       <FieldName>OWNERID</FieldName>
+       <BitOffset>53</BitOffset>
+       <BitWidth>1</BitWidth>
+       <Bias>0</Bias>
+       <NumberFormat>
+         <Type>UNKNOWN</Type>
+         <nDec>0</nDec>
+         <UseThou>0</UseThou>
+         <Fmt></Fmt>
+         <Dec></Dec>
+         <Thou></Thou>
+       </NumberFormat>
+       <NoOfSymbols>2</NoOfSymbols>
+       <Offset>1932</Offset>
+       <Length>11</Length>
+       <Comment></Comment>
+       <Tags>
+         <String>$ascii</String>
+         <String>$text</String>
+       </Tags>
+     </QvdFieldHeader>
+     <QvdFieldHeader>
+       <FieldName>GROUP</FieldName>
+       <BitOffset>54</BitOffset>
+       <BitWidth>1</BitWidth>
+       <Bias>0</Bias>
+       <NumberFormat>
+         <Type>UNKNOWN</Type>
+         <nDec>0</nDec>
+         <UseThou>0</UseThou>
+         <Fmt></Fmt>
+         <Dec></Dec>
+         <Thou></Thou>
+       </NumberFormat>
+       <NoOfSymbols>2</NoOfSymbols>
+       <Offset>1943</Offset>
+       <Length>12</Length>
+       <Comment></Comment>
+       <Tags></Tags>
+     </QvdFieldHeader>
+     <QvdFieldHeader>
+       <FieldName>GROUPID</FieldName>
+       <BitOffset>55</BitOffset>
+       <BitWidth>1</BitWidth>
+       <Bias>0</Bias>
+       <NumberFormat>
+         <Type>UNKNOWN</Type>
+         <nDec>0</nDec>
+         <UseThou>0</UseThou>
+         <Fmt></Fmt>
+         <Dec></Dec>
+         <Thou></Thou>
+       </NumberFormat>
+       <NoOfSymbols>2</NoOfSymbols>
+       <Offset>1955</Offset>
+       <Length>11</Length>
+       <Comment></Comment>
+       <Tags>
+         <String>$ascii</String>
+         <String>$text</String>
+       </Tags>
+     </QvdFieldHeader>
+     <QvdFieldHeader>
+       <FieldName>LASTACCESS</FieldName>
+       <BitOffset>0</BitOffset>
+       <BitWidth>8</BitWidth>
+       <Bias>0</Bias>
+       <NumberFormat>
+         <Type>UNKNOWN</Type>
+         <nDec>0</nDec>
+         <UseThou>0</UseThou>
+         <Fmt></Fmt>
+         <Dec></Dec>
+         <Thou></Thou>
+       </NumberFormat>
+       <NoOfSymbols>40</NoOfSymbols>
+       <Offset>1966</Offset>
+       <Length>1445</Length>
+       <Comment></Comment>
+       <Tags>
+         <String>$ascii</String>
+         <String>$text</String>
+       </Tags>
+     </QvdFieldHeader>
+     <QvdFieldHeader>
+       <FieldName>LASTMODIFICATION</FieldName>
+       <BitOffset>29</BitOffset>
+       <BitWidth>5</BitWidth>
+       <Bias>0</Bias>
+       <NumberFormat>
+         <Type>UNKNOWN</Type>
+         <nDec>0</nDec>
+         <UseThou>0</UseThou>
+         <Fmt></Fmt>
+         <Dec></Dec>
+         <Thou></Thou>
+       </NumberFormat>
+       <NoOfSymbols>23</NoOfSymbols>
+       <Offset>3411</Offset>
+       <Length>816</Length>
+       <Comment></Comment>
+       <Tags>
+         <String>$ascii</String>
+         <String>$text</String>
+       </Tags>
+     </QvdFieldHeader>
+     <QvdFieldHeader>
+       <FieldName>LASTSTATUSCHANGE</FieldName>
+       <BitOffset>34</BitOffset>
+       <BitWidth>6</BitWidth>
+       <Bias>0</Bias>
+       <NumberFormat>
+         <Type>UNKNOWN</Type>
+         <nDec>0</nDec>
+         <UseThou>0</UseThou>
+         <Fmt></Fmt>
+         <Dec></Dec>
+         <Thou></Thou>
+       </NumberFormat>
+       <NoOfSymbols>20</NoOfSymbols>
+       <Offset>4227</Offset>
+       <Length>705</Length>
+       <Comment></Comment>
+       <Tags>
+         <String>$ascii</String>
+         <String>$text</String>
+       </Tags>
+     </QvdFieldHeader>
+     <QvdFieldHeader>
+       <FieldName>FILEPATH</FieldName>
+       <BitOffset>40</BitOffset>
+       <BitWidth>5</BitWidth>
+       <Bias>0</Bias>
+       <NumberFormat>
+         <Type>UNKNOWN</Type>
+         <nDec>0</nDec>
+         <UseThou>0</UseThou>
+         <Fmt></Fmt>
+         <Dec></Dec>
+         <Thou></Thou>
+       </NumberFormat>
+       <NoOfSymbols>30</NoOfSymbols>
+       <Offset>4932</Offset>
+       <Length>929</Length>
        <Comment></Comment>
        <Tags>
          <String>$ascii</String>
@@ -360,14 +345,15 @@
      </QvdFieldHeader>
    </Fields>
    <Compression></Compression>
-   <RecordByteSize>5</RecordByteSize>
-   <NoOfRecords>18</NoOfRecords>
-   <Offset>2292</Offset>
-   <Length>90</Length>
+   <RecordByteSize>7</RecordByteSize>
+   <NoOfRecords>65</NoOfRecords>
+   <Offset>5861</Offset>
+   <Length>455</Length>
    <Lineage></Lineage>
    <Comment></Comment>
    <EncryptionInfo></EncryptionInfo>
  </QvdTableHeader>
- C:\Users\Emmanuel\OneDrive\Documents\GitHub\FileAnalyzer\Qlik\02_Ressources\data\scan_dir_files.Mr-Hyde.20210308.012726.csv OK 0c53c6608a32d69d49ea65753844c0e0  1f5fe86757b1d9d4a6b2961df450382c 4cd13bc4bdaf12bc089c19405e893aa0 65399a930e634b6aeeb2504a4079a953 692062bd3f30cb02ae38e7c9a87b2cca 8f973977a9827e8a07aea754cbae626d d41d8cd98f00b204e9800998ecf8427e d7a639e82281d2409e610a2038cacab2 f0bcb38666116a5010acccfaa0336b7d 1   49     157 	   9 æ   230    1     0 Ã   195    16 î  1310958 ­  1310893 ²  1310898 '  1318951 +  1318955 -  1318957 /  1318959 @@ 1327168 A@ 1327169 K@ 1327179 ±  1310897 ’  1310866 ©  1310889   1310864 «  1310891 •  1310869 ª  1310890   1310861    8     0    16 ×  983 
-   10    4096 ‚  386 Ó  1747   7958 ‹   139 ì   236     0 8  6456 &  806 -rwxrwxr-x lrwxrwxrwx drwxrwxr-x -rw-rw-r-- è  1000 zidmann è  1000 zidmann 2021-03-08 00:23:55.068306978 +0100 2021-03-07 23:46:20.446234362 +0100 2021-03-08 01:05:46.518158017 +0100 2021-03-08 00:06:10.247897233 +0100 2021-03-08 00:24:05.596370537 +0100 2021-03-08 01:27:26.355812277 +0100 2021-03-08 01:27:26.363812329 +0100 2021-03-08 00:06:52.724376112 +0100 2021-03-08 01:27:26.371812382 +0100 2021-03-08 00:36:39.658287644 +0100 2021-03-08 00:23:52.612292123 +0100 2021-03-07 23:46:20.442234349 +0100 2021-03-08 01:27:26.363812329 +0100 2021-03-08 00:35:39.577801483 +0100 2021-03-08 00:23:52.640292293 +0100 2021-03-08 01:27:26.371812382 +0100 2021-03-08 01:27:26.471813042 +0100 2021-03-08 00:35:39.509800923 +0100 2021-03-08 00:29:17.522225320 +0100 2021-03-08 00:23:52.640292293 +0100 2021-03-07 23:46:20.442234349 +0100 2021-03-08 01:27:26.363812329 +0100 2021-03-08 00:35:39.577801483 +0100 2021-03-08 01:27:26.371812382 +0100 2021-03-08 01:27:26.471813042 +0100 2021-03-08 00:29:17.558225710 +0100 ./util/analyze_file.sh ./conf/fix_report.env ./conf/scan_dir_files.env . ./bat ./conf ./util ./report ./log ./tmp ./conf/letters_valid.conf ./tmp/scan_dir_files.1.9515.tmp ./bat/fix_report.sh ./report/scan_dir_files.Mr-Hyde.20210308.012726.csv ./conf/common.env ./tmp/scan_dir_files.2.9515.tmp ./bat/scan_dir_files.sh ./log/scan_dir_files.Mr-Hyde.20210308.012726.log      EDDHED„HDHÈDˆ™DÈD‰D‘DHÕ¡Dˆ¢	DˆU¢
-ˆÌ…ÊÌÚêUTVãØÜ…Ë!Öãâe"4$*Vä
+ C:\Users\Emmanuel\OneDrive\Documents\GitHub\FileAnalyzer\Qlik\02_Ressources\data\scan_dir_files.Mr-Hyde.20210308.012726.csv C:\Users\Emmanuel\OneDrive\Documents\GitHub\FileAnalyzer\Qlik\02_Ressources\data\scan_dir_files.Mr-Hyde.20220328.153009.csv C:\Users\Emmanuel\OneDrive\Documents\GitHub\FileAnalyzer\Qlik\02_Ressources\data\scan_dir_files.Mr-Hyde.20220328.153031.csv OK BUG 0c53c6608a32d69d49ea65753844c0e0  1f5fe86757b1d9d4a6b2961df450382c 4cd13bc4bdaf12bc089c19405e893aa0 65399a930e634b6aeeb2504a4079a953 692062bd3f30cb02ae38e7c9a87b2cca 8f973977a9827e8a07aea754cbae626d d41d8cd98f00b204e9800998ecf8427e d7a639e82281d2409e610a2038cacab2 f0bcb38666116a5010acccfaa0336b7d 0d5b82c7fca2e52f030fe838c0be65ce 115454a83e9ae538dd5bcbaad8d606a4 58c74601c1b2f74f384e5e0f1d9e07b8 7e7dd89498234178a0860cbb36d69dd4 aaddf7558cd5ce5d255020577dad2cdb b3fc9ad53a44167f2c5c31163e0a4613 e934eb80e3c4d7b776e8755c397d6bfb f2e5985237fae5f2bc131e7a58731e5f 1335b41f5858357bbface9440e400235 1bf8366d68a273791aeb2e806e2783fa 27cfddb23852c37f730b0b3d7fda2dca b92c7d2c746fa24d3fe28545c7f35bc4 1   49     157 	   9 æ   230    1     0 Ã   195    16    12 §>  16039    27 t?  16244 è   232 Å   197    23 î  1310958 ­  1310893 ²  1310898 '  1318951 +  1318955 -  1318957 /  1318959 @@ 1327168 A@ 1327169 K@ 1327179 ±  1310897 ’  1310866 ©  1310889   1310864 «  1310891 •  1310869 ª  1310890   1310861 Þ 1312478 G 1312327 F 1312326 Û 1312475 H 1312328 I 1312329 é 1312489 Ú 1312474 Ž  1310862 ï 1312495 ý 1312509     8     0    16 p   8304  !  8608  ×  983 
+   10    4096 ‚  386 Ó  1747   7958 ‹   139 ì   236     0 8  6456 &  806 ¾	  2494 uÖ@ 4249205 ¨  1448 ³  1459 ¡6C 4404897 j  8042 '  807 Œ  6540 |  1404 ´  4788 ×	  2519  -rwxrwxr-x lrwxrwxrwx drwxrwxr-x -rw-rw-r--  è  1000  zidmann  è  1000  zidmann  2021-03-08 00:23:55.068306978 +0100 2021-03-07 23:46:20.446234362 +0100 2021-03-08 01:05:46.518158017 +0100 2021-03-08 00:06:10.247897233 +0100 2021-03-08 00:24:05.596370537 +0100 2021-03-08 01:27:26.355812277 +0100 2021-03-08 01:27:26.363812329 +0100 2021-03-08 00:06:52.724376112 +0100 2021-03-08 01:27:26.371812382 +0100 2021-03-08 00:36:39.658287644 +0100 2022-03-28 15:30:09.848715649 +0200 2022-03-28 15:30:09.832713700 +0200 2021-09-22 00:12:16.839130680 +0200 2022-03-28 15:29:19.115450235 +0200 2022-03-28 15:29:14.421638308 +0200 2022-03-28 15:29:19.151480625 +0200 2022-03-28 15:29:19.087426599 +0200 2022-03-28 15:29:19.063406339 +0200 2022-03-28 15:29:18.763124090 +0200 2022-03-28 15:29:18.723085500 +0200 2021-05-08 18:03:24.091600267 +0200 2021-09-18 00:39:04.131448076 +0200 2021-09-18 00:44:13.073907222 +0200 2022-03-28 15:30:09.812711263 +0200 2021-09-18 00:50:27.132884662 +0200 2021-05-08 18:03:24.135600753 +0200 2022-03-28 15:30:09.776706876 +0200 2022-03-28 15:30:10.252764320 +0200 2022-03-28 15:30:09.860717111 +0200 2022-03-28 15:30:10.700817911 +0200 2022-03-28 15:30:10.664813605 +0200 2022-03-28 15:30:31.142210634 +0200 2022-03-28 15:30:10.708818868 +0200 2022-03-28 15:30:10.620808341 +0200 2022-03-28 15:30:09.868718086 +0200 2022-03-28 15:30:10.776827002 +0200 2022-03-28 15:30:10.736822217 +0200 2022-03-28 15:30:09.912723447 +0200 2022-03-28 15:30:10.876838964 +0200  2021-03-08 00:23:52.612292123 +0100 2021-03-07 23:46:20.442234349 +0100 2021-03-08 01:27:26.363812329 +0100 2021-03-08 00:35:39.577801483 +0100 2021-03-08 00:23:52.640292293 +0100 2021-03-08 01:27:26.371812382 +0100 2021-03-08 01:27:26.471813042 +0100 2021-03-08 00:35:39.509800923 +0100 2021-03-08 00:29:17.522225320 +0100 2022-03-28 15:30:10.676815040 +0200 2021-09-18 00:42:45.133207228 +0200 2021-04-01 23:51:49.867602256 +0200 2022-03-28 15:30:09.832713700 +0200 2021-09-18 00:42:45.197207737 +0200 2021-09-18 00:48:06.743767193 +0200 2021-09-18 00:48:06.711766938 +0200 2021-04-01 23:51:45.795556513 +0200 2021-04-01 23:51:49.827601808 +0200 2022-03-28 15:30:31.142210634 +0200 2022-03-28 15:30:10.896841356 +0200 2022-03-28 15:30:10.892840878 +0200 2022-03-28 15:30:31.266195446 +0200  2021-03-08 00:23:52.640292293 +0100 2021-03-07 23:46:20.442234349 +0100 2021-03-08 01:27:26.363812329 +0100 2021-03-08 00:35:39.577801483 +0100 2021-03-08 01:27:26.371812382 +0100 2021-03-08 01:27:26.471813042 +0100 2021-03-08 00:29:17.558225710 +0100 2022-03-28 15:30:10.676815040 +0200 2021-09-18 00:42:45.133207228 +0200 2021-04-01 23:51:49.867602256 +0200 2022-03-28 15:30:09.832713700 +0200 2021-09-18 00:42:45.197207737 +0200 2021-09-18 00:48:06.743767193 +0200 2021-09-18 00:48:06.711766938 +0200 2021-04-01 23:51:45.827556873 +0200 2022-03-28 15:30:31.142210634 +0200 2022-03-28 15:30:10.896841356 +0200 2022-03-28 15:30:10.892840878 +0200 2022-03-28 15:30:31.266195446 +0200  ./util/analyze_file.sh ./conf/fix_report.env ./conf/scan_dir_files.env . ./bat ./conf ./util ./report ./log ./tmp ./conf/letters_valid.conf ./tmp/scan_dir_files.1.9515.tmp ./bat/fix_report.sh ./report/scan_dir_files.Mr-Hyde.20210308.012726.csv ./conf/common.env ./tmp/scan_dir_files.2.9515.tmp ./bat/scan_dir_files.sh ./log/scan_dir_files.Mr-Hyde.20210308.012726.log ./tmp/scan_dir_files.1.4499.tmp ./report/scan_dir_files.Mr-Hyde.20210918.003904.csv ./log/scan_dir_files.Mr-Hyde.20210918.003904.log ./report/scan_dir_files.Mr-Hyde.20220328.153009.csv ./log/scan_dir_files.Mr-Hyde.20210918.004413.log ./report/scan_dir_files.Mr-Hyde.20210918.004413.csv ./tmp/scan_dir_files.2.4499.tmp ./log/scan_dir_files.Mr-Hyde.20220328.153009.log ./log/scan_dir_files.Mr-Hyde.20220328.153031.log ./report/scan_dir_files.Mr-Hyde.20220328.153031.csv ./tmp/scan_dir_files.1.4923.tmp ./tmp/scan_dir_files.2.4923.tmp        I!! I!" PB# P b$ P("% P0‚ & P8¢' P@¢( PH¢) ˜P#J ØXÄk 	aåŒ Xi¦­ ˜q'n Ùy¨Ï 	‚	ð XŠª
+     ˜’+2ÛšL!SI!!I!"PB#P b%$P("%P0‚ &P8‚)'P@‚)(PH‚))˜P#J£­-tX©†)µX³Î1v˜q'nœ»ï5—Â‹:¬ÙÁˆ)ØÌ‘)BÔ2&Ð
+     ÛšL!SI!!I!"PB#P b%$P("%P0‚ &P8B>'P@B>(PHB>)˜”Q> ØÌsBy!˜P#J"­”Fõ#£­-tXÁF>»$X³Î1v˜q'n%œ»ï5—&Â‹:¬XÝµJ<ÙáH>ÝBÔ2&Ð'eèÖN0ü

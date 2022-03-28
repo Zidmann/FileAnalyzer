@@ -30,6 +30,7 @@ SET vTableName='sourceLabel';
 call file_table_multiple_read(vSourceLabelMappingPath, vTableName);
 call table_file_write(vTableName, vSourceLabelMappingQvdFilePath);
 call table_drop(vTableName);
+call console_jumpline;
 
 call console_info('End of the script $(vScriptName)');
 call console_delimitation;

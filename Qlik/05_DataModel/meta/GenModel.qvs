@@ -24,122 +24,153 @@ call console_info('Loading the mapping between a source and its associated label
 call file_table_read(vSourceLabelMappingQvdFilePath, 'mappingSourceLabel');
 call console_jumpline;
 
-call console_info('Define the final mapping between the source filepath and the label');
-sourceRegister:
+call console_info('Define the mapping between the source filepath and the label');
+tmp_sourceRegister:
+NoConcatenate
 LOAD DISTINCT SOURCE,
               $(file_basename(SOURCE)) as TMP_SOURCE_FILENAME
 RESIDENT analyzeReport
 ;
 
-tmp_mappingSourceLabel:
+LEFT JOIN(tmp_sourceRegister)
 LOAD FILENAME as TMP_SOURCE_FILENAME,
-     MINSTRING(LABEL) as TMP_LABEL_CONTENT,
-     COUNT(DISTINCT LABEL) as TMP_LABEL_DUPLICATES
+     IF(COUNT(DISTINCT LABEL)=1, MINSTRING(LABEL), '') as LABEL_CONTENT
 RESIDENT mappingSourceLabel
 GROUP BY FILENAME
 ;
 call table_drop('mappingSourceLabel');
+call column_drop('tmp_sourceRegister', 'TMP_SOURCE_FILENAME');
 
-// Select the label when there is no confusion
-LEFT JOIN(sourceRegister)
-LOAD TMP_SOURCE_FILENAME,
-     TMP_LABEL_CONTENT as TMP_LABEL
-RESIDENT tmp_mappingSourceLabel
-WHERE TMP_LABEL_DUPLICATES=1
-;
-call table_drop('tmp_mappingSourceLabel');
-call column_drop('sourceRegister', 'TMP_SOURCE_FILENAME');
-
-// Use the source path if the label is not defined
-LEFT JOIN(sourceRegister)
+sourceRegister:
+NoConcatenate
 LOAD SOURCE,
-     IF(TMP_LABEL='', SOURCE, TMP_LABEL) as SOURCE_LABEL
-RESIDENT sourceRegister
+     '_UNKNOWN_' & rowno() as LABEL_CONTENT
+RESIDENT tmp_sourceRegister
+WHERE LEN(LABEL_CONTENT)=0
 ;
-call column_drop('sourceRegister', 'TMP_LABEL');
+sourceRegister:
+Concatenate
+LOAD SOURCE,
+     LABEL_CONTENT
+RESIDENT tmp_sourceRegister
+WHERE LEN(LABEL_CONTENT)>0
+;
+call table_drop('tmp_sourceRegister');
 call console_jumpline;
 
+call console_info('Identify the corrupted reports and exclude them');
+tmp_corruption_search:
+LOAD SOURCE as TMP_SOURCE,
+     FILEPATH as TMP_FILEPATH,
+     IF(COUNT(1)=1, 'NO', 'YES') as TMP_DUPLICATE
+RESIDENT analyzeReport
+GROUP BY SOURCE, FILEPATH
+;
+
+tmp_corruption_status:
+LOAD TMP_SOURCE,
+     MAXSTRING(TMP_DUPLICATE) as TMP_DUPLICATE
+RESIDENT tmp_corruption_search
+GROUP BY TMP_SOURCE
+;
+call table_drop('tmp_corruption_search');
+
+LEFT JOIN(sourceRegister)
+LOAD TMP_SOURCE as SOURCE,
+     TMP_DUPLICATE as DUPLICATE
+RESIDENT tmp_corruption_status
+;
+call table_drop('tmp_corruption_status');
+call console_jumpline;
+
+call console_info('Filter only the lines which are not in a file with corruption and define an ID for each line');
 LEFT JOIN(analyzeReport)
 LOAD SOURCE,
-     SOURCE_LABEL
+     DUPLICATE as TMP_DUPLICATE,
+	 LABEL_CONTENT as TMP_LABEL_CONTENT
 RESIDENT sourceRegister
 ;
-call column_drop('analyzeReport', 'SOURCE');
 
-call console_info('Add the new columns in the reports');
-tmp_analyzeReport:
-NoConcatenate
+tmp_report:
 LOAD rowno() as ID_FILE,
-     SOURCE_LABEL,
-     FILEPATH,
-     MD5SUM,
-     STATUSCODE,
-     INODE,
-     OWNERID,
-     OWNER,
-     GROUPID,
-     GROUP,
-     LASTACCESS,
-     LASTMODIFICATION,
-     LASTSTATUSCHANGE,
-     NBBLOCKS,
-     $(number_order(NBBLOCKS)) as NBBLOCKS_ORDER,
-     NBLINES,
-     $(number_order(NBLINES)) as NBLINES_ORDER,
-     SIZE,
-     $(filesize_readable(SIZE)) as SIZE_READABLE,
-     LEFT(PERMISSION, 1) as TMP_TYPE,
-     $(file_dirname_unix(FILEPATH)) as TMP_DIRNAME,
-     $(file_basename_unix(FILEPATH)) as TMP_BASENAME,
-     $(file_extension_unix(FILEPATH)) as TMP_EXTENSION
+     TMP_LABEL_CONTENT,
+     FILEPATH as TMP_FILEPATH,
+     STATUSCODE as TMP_STATUSCODE,
+     MD5SUM as TMP_MD5SUM,
+     NBLINES as TMP_NBLINES,
+     INODE as TMP_INODE,
+     NBBLOCKS as TMP_NBBLOCKS,
+     SIZE as TMP_SIZE,
+     PERMISSION as TMP_PERMISSION,
+     OWNER as TMP_OWNER,
+     OWNERID as TMP_OWNERID,
+     GROUP as TMP_GROUP,
+     GROUPID as TMP_GROUPID,
+     LASTACCESS as TMP_LASTACCESS,
+     LASTMODIFICATION as TMP_LASTMODIFICATION,
+     LASTSTATUSCHANGE as TMP_LASTSTATUSCHANGE
 RESIDENT analyzeReport
-ORDER BY SOURCE_LABEL, FILEPATH, STATUSCODE
+WHERE TMP_DUPLICATE='NO'
 ;
 call table_drop('analyzeReport');
-call table_rename('tmp_analyzeReport', 'analyzeReport');
+call console_jumpline;
 
-tmp_analyzeReport:
+call console_info('Add new columns in the temporary reports');
+LEFT JOIN(tmp_report)
 LOAD ID_FILE,
-     IF(TMP_TYPE='-', 'FILE', IF(TMP_TYPE='d', 'DIR', IF(TMP_TYPE='l', 'LINK', 'OTHER'))) as OBJECT_TYPE,
-	 FILEPATH as TMP_FILEPATH,
-     TMP_DIRNAME,
-     TMP_BASENAME,
-     TMP_EXTENSION
-RESIDENT analyzeReport
+     $(filesize_readable(TMP_SIZE)) as TMP_SIZE_READABLE,
+     $(file_dirname_unix(TMP_FILEPATH)) as TMP_DIRNAME,
+     $(file_basename_unix(TMP_FILEPATH)) as TMP_BASENAME,
+     $(file_extension_unix(TMP_FILEPATH)) as TMP_EXTENSION,
+	 $(number_order(TMP_NBBLOCKS)) as TMP_NBBLOCKS_ORDER,
+     $(number_order(TMP_NBLINES)) as TMP_NBLINES_ORDER,
+     LEFT(TMP_PERMISSION, 1) as TMP_TYPE
+RESIDENT tmp_report
 ;
-call column_drop('analyzeReport', 'TMP_TYPE');
-call column_drop('analyzeReport', 'TMP_DIRNAME');
-call column_drop('analyzeReport', 'TMP_BASENAME');
-call column_drop('analyzeReport', 'TMP_EXTENSION');
-
-tmp2_analyzeReport:
+LEFT JOIN(tmp_report)
 LOAD ID_FILE,
-     OBJECT_TYPE,
-     IF(OBJECT_TYPE<>'DIR', TMP_DIRNAME, '')            as DIRNAME,
-     IF(OBJECT_TYPE<>'DIR', TMP_BASENAME, TMP_FILEPATH) as BASENAME,
-     IF(OBJECT_TYPE<>'DIR', TMP_EXTENSION, '')          as EXTENSION
-RESIDENT tmp_analyzeReport
+     IF(TMP_TYPE='-', 'FILE', IF(TMP_TYPE='d', 'DIR', IF(TMP_TYPE='l', 'LINK', 'OTHER'))) as TMP_OBJECT_TYPE
+RESIDENT tmp_report
 ;
-call table_drop('tmp_analyzeReport');
-
-LEFT JOIN(analyzeReport)
+LEFT JOIN(tmp_report)
 LOAD ID_FILE,
-     OBJECT_TYPE,
-     DIRNAME,
-     BASENAME,
-     EXTENSION
-RESIDENT tmp2_analyzeReport
+     IF(TMP_OBJECT_TYPE<>'DIR', TMP_DIRNAME, '')            as TMP_DIRNAME,
+     IF(TMP_OBJECT_TYPE<>'DIR', TMP_BASENAME, TMP_FILEPATH) as TMP_BASENAME,
+     IF(TMP_OBJECT_TYPE<>'DIR', TMP_EXTENSION, '')          as TMP_EXTENSION
+RESIDENT tmp_report
 ;
-call table_drop('tmp2_analyzeReport');
+call console_jumpline;
 
-call console_info('Identify the files present several times in the same report');
-fileDuplicate:
-LOAD SOURCE_LABEL,
-     FILEPATH,
-     IF(COUNT(1)=1, 'NO', 'YES') as DUPLICATED
-RESIDENT analyzeReport
-GROUP BY SOURCE_LABEL, FILEPATH
+call console_info('Define the final file information report');
+report:
+LOAD ID_FILE,
+     TMP_LABEL_CONTENT as LABEL_CONTENT,
+     TMP_STATUSCODE as STATUSCODE,
+     TMP_OBJECT_TYPE as OBJECT_TYPE,
+	 TMP_DIRNAME as DIRNAME,
+     TMP_BASENAME as BASENAME,
+     TMP_EXTENSION as EXTENSION,
+     TMP_INODE as INODE,
+     TMP_MD5SUM as MD5SUM,
+     TMP_NBLINES as NBLINES,
+     TMP_NBLINES_ORDER as NBLINES_ORDER,
+     TMP_NBBLOCKS as NBBLOCKS,
+     TMP_NBBLOCKS_ORDER as NBBLOCKS_ORDER,
+     TMP_SIZE as SIZE,
+     TMP_SIZE_READABLE as SIZE_READABLE,
+     TMP_PERMISSION as PERMISSION,
+     TMP_OWNER as OWNER,
+     TMP_OWNERID as OWNERID,
+     TMP_GROUP as GROUP,
+     TMP_GROUPID as GROUPID,
+     TMP_LASTACCESS as LASTACCESS,
+     TMP_LASTMODIFICATION as LASTMODIFICATION,
+     TMP_LASTSTATUSCHANGE as LASTSTATUSCHANGE
+RESIDENT tmp_report
 ;
+
+call table_drop('tmp_report');
+call console_jumpline;
 
 call console_info('End of the script $(vScriptName)');
 call console_delimitation;
