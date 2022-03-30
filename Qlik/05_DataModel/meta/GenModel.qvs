@@ -172,30 +172,58 @@ RESIDENT tmp_report
 call table_drop('tmp_report');
 call console_jumpline;
 
-call console_info('Identify the corrupted redundancy of the files');
-redundancy:
+call console_info('Identify the redundancy of the files, their occurrence count and check the unicity');
+contentRedundancy:
 NoConcatenate
 LOAD MD5SUM,
-     IF(COUNT(DISTINCT NBLINES)=1, 'PROBABLY', 'NO') as UNIQ,
-     COUNT(1) as GLOBAL_FILE_COUNT,
-     COUNT(DISTINCT BASENAME) as GLOBAL_FILENAME_COUNT
+     IF(COUNT(DISTINCT NBLINES)=1, 'PROBABLY', 'NO') as CONTENT_UNIQ,
+     COUNT(1) as CONTENT_GLOBAL_FILE_COUNT,
+     COUNT(DISTINCT LABEL_CONTENT) as CONTENT_SOURCE_COUNT,
+     COUNT(DISTINCT BASENAME) as CONTENT_GLOBAL_BASENAME_COUNT
 RESIDENT report
 GROUP BY MD5SUM
 ;
 
-sourceRedundancy:
+contentLocalRedundancy:
 NoConcatenate
 LOAD LABEL_CONTENT,
      MD5SUM,
-     MIN(SIZE) as MIN_SIZE,
-     MAX(SIZE) as MAX_SIZE,
-     MIN(NBBLOCKS) as MIN_NBBLOCKS,
-     MAX(NBBLOCKS) as MAX_NBBLOCKS,
-     COUNT(1) as LOCAL_FILE_COUNT,
-     COUNT(DISTINCT BASENAME) as LOCAL_FILENAME_COUNT
+     MIN(SIZE) as CONTENT_MIN_SIZE,
+     MAX(SIZE) as CONTENT_MAX_SIZE,
+     MIN(NBBLOCKS) as CONTENT_MIN_NBBLOCKS,
+     MAX(NBBLOCKS) as CONTENT_MAX_NBBLOCKS,
+     COUNT(1) as CONTENT_LOCAL_FILE_COUNT,
+     COUNT(DISTINCT BASENAME) as CONTENT_LOCAL_BASENAME_COUNT
 RESIDENT report
 GROUP BY LABEL_CONTENT, MD5SUM
 ;
+call console_jumpline;
+
+call console_info('Identify the redundancy of the filename, their occurrence count and check the content');
+basenameRedundancy:
+NoConcatenate
+LOAD BASENAME,
+     COUNT(1) as BASENAME_GLOBAL_FILE_COUNT,
+     COUNT(DISTINCT LABEL_CONTENT) as BASENAME_SOURCE_COUNT,
+     COUNT(DISTINCT MD5SUM) as BASENAME_GLOBAL_CHECKSUM_COUNT
+RESIDENT report
+GROUP BY BASENAME
+;
+
+basenameLocalRedundancy:
+NoConcatenate
+LOAD LABEL_CONTENT,
+     BASENAME,
+     MIN(SIZE) as BASENAME_MIN_SIZE,
+     MAX(SIZE) as BASENAME_MAX_SIZE,
+     MIN(NBBLOCKS) as BASENAME_MIN_NBBLOCKS,
+     MAX(NBBLOCKS) as BASENAME_MAX_NBBLOCKS,
+     COUNT(1) as BASENAME_LOCAL_FILE_COUNT,
+     COUNT(DISTINCT MD5SUM) as BASENAME_LOCAL_CHECKSUM_COUNT
+RESIDENT report
+GROUP BY LABEL_CONTENT, BASENAME
+;
+
 
 call console_info('End of the script $(vScriptName)');
 call console_delimitation;
