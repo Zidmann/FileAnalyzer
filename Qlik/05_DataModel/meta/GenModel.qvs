@@ -1,0 +1,229 @@
+// ----------------------------------------------------------------------------------------------------------------
+/*
+    Author      : Zidmann (emmanuel.zidel@gmail.com)
+    Script      : GenModel.qvs
+    Version     : 0.1.0
+    Description : Script to create the main model used in the different Qlik dashboards
+ */
+// ----------------------------------------------------------------------------------------------------------------
+// Including the variables and the functions available in the Qlik custom library
+$(Must_Include='..\02_Ressources\params.qvs');
+$(Must_Include='$(vQliklibPath)\core.qvs');
+
+SET vScriptName='GenModel';
+
+// ----------------------------------------------------------------------------------------------------------------
+//
+call console_info('Loading of the script $(vScriptName)');
+call console_jumpline;
+call console_info('Loading the analyze reports');
+call file_table_read(vFileAnalyzerQvdFilePath, 'analyzeReport');
+call console_jumpline;
+
+call console_info('Loading the mapping between a source and its associated label');
+call file_table_read(vSourceLabelMappingQvdFilePath, 'mappingSourceLabel');
+call console_jumpline;
+
+call console_info('Define the mapping between the source filepath and the label');
+tmp_sourceRegister:
+NoConcatenate
+LOAD DISTINCT SOURCE,
+              $(file_basename(SOURCE)) as TMP_SOURCE_FILENAME
+RESIDENT analyzeReport
+;
+
+LEFT JOIN(tmp_sourceRegister)
+LOAD FILENAME as TMP_SOURCE_FILENAME,
+     IF(COUNT(DISTINCT LABEL)=1, MINSTRING(LABEL), '') as LABEL_CONTENT
+RESIDENT mappingSourceLabel
+GROUP BY FILENAME
+;
+call table_drop('mappingSourceLabel');
+call column_drop('tmp_sourceRegister', 'TMP_SOURCE_FILENAME');
+
+sourceRegister:
+NoConcatenate
+LOAD SOURCE,
+     '_UNKNOWN_' & rowno() as LABEL_CONTENT
+RESIDENT tmp_sourceRegister
+WHERE LEN(LABEL_CONTENT)=0
+;
+sourceRegister:
+Concatenate
+LOAD SOURCE,
+     LABEL_CONTENT
+RESIDENT tmp_sourceRegister
+WHERE LEN(LABEL_CONTENT)>0
+;
+call table_drop('tmp_sourceRegister');
+call console_jumpline;
+
+call console_info('Identify the corrupted reports and exclude them');
+tmp_corruption_search:
+LOAD SOURCE as TMP_SOURCE,
+     FILEPATH as TMP_FILEPATH,
+     IF(COUNT(1)=1, 'NO', 'YES') as TMP_DUPLICATE
+RESIDENT analyzeReport
+GROUP BY SOURCE, FILEPATH
+;
+
+tmp_corruption_status:
+LOAD TMP_SOURCE,
+     MAXSTRING(TMP_DUPLICATE) as TMP_DUPLICATE
+RESIDENT tmp_corruption_search
+GROUP BY TMP_SOURCE
+;
+call table_drop('tmp_corruption_search');
+
+LEFT JOIN(sourceRegister)
+LOAD TMP_SOURCE as SOURCE,
+     TMP_DUPLICATE as DUPLICATE
+RESIDENT tmp_corruption_status
+;
+call table_drop('tmp_corruption_status');
+call console_jumpline;
+
+call console_info('Filter only the lines which are not in a file with corruption and define an ID for each line');
+LEFT JOIN(analyzeReport)
+LOAD SOURCE,
+     DUPLICATE as TMP_DUPLICATE,
+	 LABEL_CONTENT as TMP_LABEL_CONTENT
+RESIDENT sourceRegister
+;
+
+tmp_report:
+LOAD rowno() as ID_FILE,
+     TMP_LABEL_CONTENT,
+     FILEPATH as TMP_FILEPATH,
+     STATUSCODE as TMP_STATUSCODE,
+     MD5SUM as TMP_MD5SUM,
+     NBLINES as TMP_NBLINES,
+     INODE as TMP_INODE,
+     NBBLOCKS as TMP_NBBLOCKS,
+     SIZE as TMP_SIZE,
+     PERMISSION as TMP_PERMISSION,
+     OWNER as TMP_OWNER,
+     OWNERID as TMP_OWNERID,
+     GROUP as TMP_GROUP,
+     GROUPID as TMP_GROUPID,
+     LASTACCESS as TMP_LASTACCESS,
+     LASTMODIFICATION as TMP_LASTMODIFICATION,
+     LASTSTATUSCHANGE as TMP_LASTSTATUSCHANGE
+RESIDENT analyzeReport
+WHERE TMP_DUPLICATE='NO'
+;
+call table_drop('analyzeReport');
+call console_jumpline;
+
+call console_info('Add new columns in the temporary reports');
+LEFT JOIN(tmp_report)
+LOAD ID_FILE,
+     $(filesize_readable(TMP_SIZE)) as TMP_SIZE_READABLE,
+     $(file_dirname_unix(TMP_FILEPATH)) as TMP_DIRNAME,
+     $(file_basename_unix(TMP_FILEPATH)) as TMP_BASENAME,
+     $(file_extension_unix(TMP_FILEPATH)) as TMP_EXTENSION,
+	 $(number_order(TMP_NBBLOCKS)) as TMP_NBBLOCKS_ORDER,
+     $(number_order(TMP_NBLINES)) as TMP_NBLINES_ORDER,
+     LEFT(TMP_PERMISSION, 1) as TMP_TYPE
+RESIDENT tmp_report
+;
+LEFT JOIN(tmp_report)
+LOAD ID_FILE,
+     IF(TMP_TYPE='-', 'FILE', IF(TMP_TYPE='d', 'DIR', IF(TMP_TYPE='l', 'LINK', 'OTHER'))) as TMP_OBJECT_TYPE
+RESIDENT tmp_report
+;
+LEFT JOIN(tmp_report)
+LOAD ID_FILE,
+     IF(TMP_OBJECT_TYPE<>'DIR', TMP_DIRNAME, '')            as TMP_DIRNAME,
+     IF(TMP_OBJECT_TYPE<>'DIR', TMP_BASENAME, TMP_FILEPATH) as TMP_BASENAME,
+     IF(TMP_OBJECT_TYPE<>'DIR', TMP_EXTENSION, '')          as TMP_EXTENSION
+RESIDENT tmp_report
+;
+call console_jumpline;
+
+call console_info('Define the final file information report');
+report:
+LOAD ID_FILE,
+     TMP_LABEL_CONTENT as LABEL_CONTENT,
+     TMP_STATUSCODE as STATUSCODE,
+     TMP_OBJECT_TYPE as OBJECT_TYPE,
+	 TMP_DIRNAME as DIRNAME,
+     TMP_BASENAME as BASENAME,
+     TMP_EXTENSION as EXTENSION,
+     TMP_INODE as INODE,
+     TMP_MD5SUM as MD5SUM,
+     TMP_NBLINES as NBLINES,
+     TMP_NBLINES_ORDER as NBLINES_ORDER,
+     TMP_NBBLOCKS as NBBLOCKS,
+     TMP_NBBLOCKS_ORDER as NBBLOCKS_ORDER,
+     TMP_SIZE as SIZE,
+     TMP_SIZE_READABLE as SIZE_READABLE,
+     TMP_PERMISSION as PERMISSION,
+     TMP_OWNER as OWNER,
+     TMP_OWNERID as OWNERID,
+     TMP_GROUP as GROUP,
+     TMP_GROUPID as GROUPID,
+     TMP_LASTACCESS as LASTACCESS,
+     TMP_LASTMODIFICATION as LASTMODIFICATION,
+     TMP_LASTSTATUSCHANGE as LASTSTATUSCHANGE
+RESIDENT tmp_report
+;
+
+call table_drop('tmp_report');
+call console_jumpline;
+
+call console_info('Identify the redundancy of the files, their occurrence count and check the unicity');
+contentRedundancy:
+NoConcatenate
+LOAD MD5SUM,
+     IF(COUNT(DISTINCT NBLINES)=1, 'PROBABLY', 'NO') as CONTENT_UNIQ,
+     COUNT(1) as CONTENT_GLOBAL_FILE_COUNT,
+     COUNT(DISTINCT LABEL_CONTENT) as CONTENT_SOURCE_COUNT,
+     COUNT(DISTINCT BASENAME) as CONTENT_GLOBAL_BASENAME_COUNT
+RESIDENT report
+GROUP BY MD5SUM
+;
+
+contentLocalRedundancy:
+NoConcatenate
+LOAD LABEL_CONTENT,
+     MD5SUM,
+     MIN(SIZE) as CONTENT_MIN_SIZE,
+     MAX(SIZE) as CONTENT_MAX_SIZE,
+     MIN(NBBLOCKS) as CONTENT_MIN_NBBLOCKS,
+     MAX(NBBLOCKS) as CONTENT_MAX_NBBLOCKS,
+     COUNT(1) as CONTENT_LOCAL_FILE_COUNT,
+     COUNT(DISTINCT BASENAME) as CONTENT_LOCAL_BASENAME_COUNT
+RESIDENT report
+GROUP BY LABEL_CONTENT, MD5SUM
+;
+call console_jumpline;
+
+call console_info('Identify the redundancy of the filename, their occurrence count and check the content');
+basenameRedundancy:
+NoConcatenate
+LOAD BASENAME,
+     COUNT(1) as BASENAME_GLOBAL_FILE_COUNT,
+     COUNT(DISTINCT LABEL_CONTENT) as BASENAME_SOURCE_COUNT,
+     COUNT(DISTINCT MD5SUM) as BASENAME_GLOBAL_CHECKSUM_COUNT
+RESIDENT report
+GROUP BY BASENAME
+;
+
+basenameLocalRedundancy:
+NoConcatenate
+LOAD LABEL_CONTENT,
+     BASENAME,
+     MIN(SIZE) as BASENAME_MIN_SIZE,
+     MAX(SIZE) as BASENAME_MAX_SIZE,
+     MIN(NBBLOCKS) as BASENAME_MIN_NBBLOCKS,
+     MAX(NBBLOCKS) as BASENAME_MAX_NBBLOCKS,
+     COUNT(1) as BASENAME_LOCAL_FILE_COUNT,
+     COUNT(DISTINCT MD5SUM) as BASENAME_LOCAL_CHECKSUM_COUNT
+RESIDENT report
+GROUP BY LABEL_CONTENT, BASENAME
+;
+
+
+call console_info('End of the script $(vScriptName)');
+call console_delimitation;

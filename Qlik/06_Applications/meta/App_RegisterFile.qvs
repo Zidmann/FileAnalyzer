@@ -1,0 +1,19 @@
+// ----------------------------------------------------------------------------------------------------------------
+/*
+    Author      : Zidmann (emmanuel.zidel@gmail.com)
+    Script      : App_RegisterFile.qvs
+    Version     : 0.0.0
+    Description : Dashboard to view the 
+ */
+// ----------------------------------------------------------------------------------------------------------------
+// Including the variables and the functions available in the Qlik custom library
+$(Must_Include='..\02_Ressources\params.qvs');
+$(Must_Include='$(vQliklibPath)\core.qvs');
+
+SET vScriptName='App_RegisterFile';
+
+// ----------------------------------------------------------------------------------------------------------------
+//
+call console_info('Loading of the script $(vScriptName)');
+call console_jumpline;
+call console_delimitation;

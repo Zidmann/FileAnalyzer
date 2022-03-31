@@ -1,0 +1,36 @@
+// ----------------------------------------------------------------------------------------------------------------
+/*
+    Author      : Zidmann (emmanuel.zidel@gmail.com)
+    Script      : GenQVD_sourceLabel.qvs
+    Version     : 0.1.0
+    Description : Script to load the mapping between a source/its label used and store them in a QVD file
+ */
+// ----------------------------------------------------------------------------------------------------------------
+// Including the variables and the functions available in the Qlik custom library
+$(Must_Include='..\02_Ressources\params.qvs');
+$(Must_Include='$(vQliklibPath)\core.qvs');
+
+SET vScriptName='GenQVD_sourceLabel';
+
+// ----------------------------------------------------------------------------------------------------------------
+//
+call console_info('Loading of the script $(vScriptName)');
+call console_jumpline;
+
+Sub _file_auxi_load(vFilePath, vTableName, vPathInclude)
+    $(vTableName):
+    LOAD FILENAME,
+         LABEL
+    FROM ['$(vFilePath)'] (txt, codepage is 1252, delimiter is '\t', msq);
+    ;
+End sub;
+
+// Read the reports and store them in a QVD file
+SET vTableName='sourceLabel';
+call file_table_multiple_read(vSourceLabelMappingPath, vTableName);
+call table_file_write(vTableName, vSourceLabelMappingQvdFilePath);
+call table_drop(vTableName);
+call console_jumpline;
+
+call console_info('End of the script $(vScriptName)');
+call console_delimitation;

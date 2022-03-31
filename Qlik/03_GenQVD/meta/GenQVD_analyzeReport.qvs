@@ -1,0 +1,52 @@
+// ----------------------------------------------------------------------------------------------------------------
+/*
+    Author      : Zidmann (emmanuel.zidel@gmail.com)
+    Script      : GenQVD_analyzeReport.qvs
+    Version     : 0.1.0
+    Description : Script to load the reports of the FileAnalyzer script and store them in a QVD file
+ */
+// ----------------------------------------------------------------------------------------------------------------
+// Including the variables and the functions available in the Qlik custom library
+$(Must_Include='..\02_Ressources\params.qvs');
+$(Must_Include='$(vQliklibPath)\core.qvs');
+
+SET vScriptName='GenQVD_analyzeReport';
+
+// ----------------------------------------------------------------------------------------------------------------
+//
+call console_info('Loading of the script $(vScriptName)');
+call console_jumpline;
+
+// Defining the loading function - necessary here because the file doesn't have a label at the first line.
+// Then we overwrite the function '_file_auxi_load' to precise the option and the columns names.
+Sub _file_auxi_load(vFilePath, vTableName, vPathInclude)
+    $(vTableName):
+    LOAD '$(vFilePath)' as SOURCE,
+         STATUSCODE,
+         MD5SUM,
+         NBLINES,
+         INODE,
+         NBBLOCKS,
+         SIZE,
+         PERMISSION,
+         OWNER,
+         OWNERID,
+         GROUP,
+         GROUPID,
+         LASTACCESS,
+         LASTMODIFICATION,
+         LASTSTATUSCHANGE,
+         FILEPATH
+    FROM ['$(vFilePath)'] (txt, codepage is 1252, delimiter is '\t', msq);
+    ;
+End sub;
+
+// Read the reports and store them in a QVD file
+SET vTableName='analyzeReport';
+call file_table_multiple_read(vFileAnalyzerPatternPath, vTableName);
+call table_file_write(vTableName, vFileAnalyzerQvdFilePath);
+call table_drop(vTableName);
+call console_jumpline;
+
+call console_info('End of the script $(vScriptName)');
+call console_delimitation;
