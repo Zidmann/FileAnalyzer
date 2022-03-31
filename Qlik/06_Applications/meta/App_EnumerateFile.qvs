@@ -1,9 +1,9 @@
 // ----------------------------------------------------------------------------------------------------------------
 /*
     Author      : Zidmann (emmanuel.zidel@gmail.com)
-    Script      : App_RegisterFile.qvs
+    Script      : App_EnumerateFile.qvs
     Version     : 0.0.0
-    Description : Dashboard to view the 
+    Description : Dashboard to view the files in the different reports and some aggregated information like occupied space, count of elements
  */
 // ----------------------------------------------------------------------------------------------------------------
 // Including the variables and the functions available in the Qlik custom library
@@ -16,4 +16,14 @@ SET vScriptName='App_RegisterFile';
 //
 call console_info('Loading of the script $(vScriptName)');
 call console_jumpline;
+
+call console_info('Drop useless tables');
+call table_drop('basenameLocalRedundancy');
+call table_drop('basenameRedundancy');
+call table_drop('contentLocalRedundancy');
+call table_drop('contentRedundancy');
+call console_jumpline;
+
+call console_info('End of the script $(vScriptName)');
 call console_delimitation;
+
