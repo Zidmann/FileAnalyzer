@@ -19,7 +19,7 @@
 ##################################################################################
 # Beginning of the script - definition of the variables
 ##################################################################################
-SCRIPT_VERSION="0.0.7"
+SCRIPT_VERSION="0.0.8"
 
 # Return code
 RETURN_CODE=0
@@ -136,7 +136,7 @@ TMP2_PATH="$TMP_DIR/$PREFIX_NAME.2.$$.tmp"
 mkdir -p "$(dirname "$TMP_PATH")"
 mkdir -p "$(dirname "$TMP2_PATH")"
 
-HEADER="STATUSCODE\tMD5SUM\tNBLINES\tINODE\tNBBLOCKS\tSIZE\tPERMISSION\tOWNER\tOWNERID\tGROUP\tGROUPID\tLASTACCESS\tLASTMODIFICATION\tLASTSTATUSCHANGE\tFILEPATH"
+HEADER="STATUSCODE\tMD5SUM\tNBLINES\tINODE\tNBBLOCKS\tSIZE\tPERMISSION\tOWNERID\tOWNER\tGROUPID\tGROUP\tLASTACCESS\tLASTMODIFICATION\tLASTSTATUSCHANGE\tFILEPATH"
 # Elapsed time - begin date
 BEGIN_DATE=$(date +%s)
 
