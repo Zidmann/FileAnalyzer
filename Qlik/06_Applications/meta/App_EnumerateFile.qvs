@@ -20,8 +20,6 @@ call console_jumpline;
 call console_info('Drop useless tables');
 call table_drop('basenameLocalRedundancy');
 call table_drop('basenameRedundancy');
-call table_drop('contentLocalRedundancy');
-call table_drop('contentRedundancy');
 call console_jumpline;
 
 call console_info('End of the script $(vScriptName)');
