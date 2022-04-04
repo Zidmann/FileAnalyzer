@@ -1,0 +1,42 @@
+// ----------------------------------------------------------------------------------------------------------------
+/*
+    Author      : Zidmann (emmanuel.zidel@gmail.com)
+    Script      : GenModelBasename.qvs
+    Version     : 0.1.0
+    Description : Script to create the main model used in the different Qlik dashboards based on the basename
+ */
+// ----------------------------------------------------------------------------------------------------------------
+
+SET vScriptName='GenModelBasename';
+$(Must_Include='..\05_DataModel\meta\GenModel.qvs');
+
+// ----------------------------------------------------------------------------------------------------------------
+//
+call console_info('Identify the redundancy of the filename, their occurrence count and check the content');
+basenameRedundancy:
+NoConcatenate
+LOAD BASENAME,
+     COUNT(1) as BASENAME_GLOBAL_FILE_COUNT,
+     COUNT(DISTINCT LABEL_CONTENT) as BASENAME_SOURCE_COUNT,
+     COUNT(DISTINCT MD5SUM) as BASENAME_GLOBAL_CHECKSUM_COUNT
+RESIDENT report
+GROUP BY BASENAME
+;
+
+basenameLocalRedundancy:
+NoConcatenate
+LOAD LABEL_CONTENT,
+     BASENAME,
+     MIN(SIZE) as BASENAME_MIN_SIZE,
+     MAX(SIZE) as BASENAME_MAX_SIZE,
+     MIN(NBBLOCKS) as BASENAME_MIN_NBBLOCKS,
+     MAX(NBBLOCKS) as BASENAME_MAX_NBBLOCKS,
+     COUNT(1) as BASENAME_LOCAL_FILE_COUNT,
+     COUNT(DISTINCT MD5SUM) as BASENAME_LOCAL_CHECKSUM_COUNT
+RESIDENT report
+GROUP BY LABEL_CONTENT, BASENAME
+;
+call console_jumpline;
+
+call console_info('End of the script $(vScriptName)');
+call console_delimitation;

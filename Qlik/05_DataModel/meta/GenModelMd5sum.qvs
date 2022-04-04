@@ -1,0 +1,43 @@
+// ----------------------------------------------------------------------------------------------------------------
+/*
+    Author      : Zidmann (emmanuel.zidel@gmail.com)
+    Script      : GenModelMd5sum.qvs
+    Version     : 0.1.0
+    Description : Script to create the main model used in the different Qlik dashboards based on the md5sum
+ */
+// ----------------------------------------------------------------------------------------------------------------
+
+SET vScriptName='GenModelMd5sum';
+$(Must_Include='..\05_DataModel\meta\GenModel.qvs');
+
+// ----------------------------------------------------------------------------------------------------------------
+//
+call console_info('Identify the redundancy of the checksum, their occurrence count and check the unicity');
+contentRedundancy:
+NoConcatenate
+LOAD MD5SUM,
+     IF(COUNT(DISTINCT NBLINES)=1, 'PROBABLY', 'NO') as CONTENT_UNIQ,
+     COUNT(1) as CONTENT_GLOBAL_FILE_COUNT,
+     COUNT(DISTINCT LABEL_CONTENT) as CONTENT_SOURCE_COUNT,
+     COUNT(DISTINCT BASENAME) as CONTENT_GLOBAL_BASENAME_COUNT
+RESIDENT report
+GROUP BY MD5SUM
+;
+
+contentLocalRedundancy:
+NoConcatenate
+LOAD LABEL_CONTENT,
+     MD5SUM,
+     MIN(SIZE) as CONTENT_MIN_SIZE,
+     MAX(SIZE) as CONTENT_MAX_SIZE,
+     MIN(NBBLOCKS) as CONTENT_MIN_NBBLOCKS,
+     MAX(NBBLOCKS) as CONTENT_MAX_NBBLOCKS,
+     COUNT(1) as CONTENT_LOCAL_FILE_COUNT,
+     COUNT(DISTINCT BASENAME) as CONTENT_LOCAL_BASENAME_COUNT
+RESIDENT report
+GROUP BY LABEL_CONTENT, MD5SUM
+;
+call console_jumpline;
+
+call console_info('End of the script $(vScriptName)');
+call console_delimitation;
